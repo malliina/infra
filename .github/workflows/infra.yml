@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Azure ARM
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+    steps:
+
+    - uses: actions/checkout@main
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        template: ./infra.bicep
