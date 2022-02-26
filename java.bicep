@@ -6,8 +6,8 @@ param uniqueId string = uniqueString(resourceGroup().id)
 param originHostname string = 'pics-java.malliina.com'
 param cdnHostname string = 'pics-java-cdn.malliina.com'
 
-// @secure()
-// param appSecret string
+@secure()
+param appSecret string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-${uniqueId}'
@@ -31,10 +31,10 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
           value: 'false'
         }
-        // {
-        //   name: 'APPLICATION_SECRET'
-        //   value: appSecret
-        // }
+        {
+          name: 'APPLICATION_SECRET'
+          value: appSecret
+        }
       ]
       linuxFxVersion: 'JAVA|11-java11'
     }
@@ -147,3 +147,4 @@ module cdn 'cdn.bicep' = {
 }
 
 output txtDomainVerification string = site.properties.customDomainVerificationId
+output sitePrincipalId string = site.identity.principalId
