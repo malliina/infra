@@ -95,6 +95,14 @@ module pics 'java.bicep' = {
     location: location
     managedIdentityId: managedIdentity.id
     appSecret: keyVault.getSecret('PICS-APPLICATION-SECRET')
+    dbPass: keyVault.getSecret('PICS-DB-PASS')
+    twitterSecret: keyVault.getSecret('PICS-TWITTER-CLIENT-SECRET')
+    microsoftSecret: keyVault.getSecret('PICS-MICROSOFT-CLIENT-SECRET')
+    googleSecret: keyVault.getSecret('PICS-GOOGLE-CLIENT-SECRET')
+    githubSecret: keyVault.getSecret('PICS-GITHUB-CLIENT-SECRET')
+    facebookSecret: keyVault.getSecret('PICS-FACEBOOK-CLIENT-SECRET')
+    awsAccessKeyId: keyVault.getSecret('AWS-ACCESS-KEY-ID')
+    awsSecretAccessKey: keyVault.getSecret('AWS-SECRET-ACCESS-KEY')
   }
 }
 

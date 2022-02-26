@@ -8,6 +8,22 @@ param cdnHostname string = 'pics-java-cdn.malliina.com'
 
 @secure()
 param appSecret string
+@secure()
+param dbPass string
+@secure()
+param twitterSecret string
+@secure()
+param microsoftSecret string
+@secure()
+param googleSecret string
+@secure()
+param githubSecret string
+@secure()
+param facebookSecret string
+@secure()
+param awsAccessKeyId string
+@secure()
+param awsSecretAccessKey string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-${uniqueId}'
@@ -34,6 +50,38 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'APPLICATION_SECRET'
           value: appSecret
+        }
+        {
+          name: 'MICROSOFT_CLIENT_SECRET'
+          value: microsoftSecret
+        }
+        {
+          name: 'GOOGLE_CLIENT_SECRET'
+          value: googleSecret
+        }
+        {
+          name: 'GITHUB_CLIENT_SECRET'
+          value: githubSecret
+        }
+        {
+          name: 'FACEBOOK_CLIENT_SECRET'
+          value: facebookSecret
+        }
+        {
+          name: 'TWITTER_CLIENT_SECRET'
+          value: twitterSecret
+        }
+        {
+          name: 'DB_PASS'
+          value: dbPass
+        }
+        {
+          name: 'AWS_ACCESS_KEY_ID'
+          value: awsAccessKeyId
+        }
+        {
+          name: 'AWS_SECRET_ACCESS_KEY'
+          value: awsSecretAccessKey
         }
       ]
       linuxFxVersion: 'JAVA|11-java11'
