@@ -10,6 +10,10 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-${uniqueId}'
 }
 
+resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
+  name: 'files-${uniqueId}'
+}
+
 resource site 'Microsoft.Web/sites@2020-06-01' = {
   name: 'pics-${uniqueId}'
   location: location
@@ -32,6 +36,19 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     location: location
     properties: {
       serverFarmId: appServicePlan.id
+    }
+  }
+
+  resource config 'config' = {
+    name: 'azurestorageaccounts'
+    properties: {
+      'files': {
+        type: 'AzureFiles'
+        shareName: 'files'
+        mountPath: '/files'
+        accountName: storage.name      
+        accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+      }
     }
   }
 }
