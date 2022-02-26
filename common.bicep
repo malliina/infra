@@ -28,13 +28,13 @@ resource cdnProfile 'Microsoft.Cdn/profiles@2020-09-01' = {
 }
 
 // https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
-// resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
-//   name: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
-// }
-
-resource ownerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
-  name: '8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
+resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  name: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
 }
+
+// resource ownerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+//   name: '8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
+// }
 
 // https://github.com/Azure/azure-quickstart-templates/blob/e6e50ae57a2613858b37af1c3e95dfe93733bd4c/quickstarts/microsoft.storage/storage-static-website/main.bicep#L47
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
@@ -44,10 +44,10 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-
 
 // https://github.com/Azure/azure-docs-bicep-samples/blob/main/samples/deployment-script/deploymentscript-keyvault-mi.bicep
 resource managedIdentityRole 'Microsoft.Authorization/roleAssignments@2021-04-01-preview' = {
-  name: guid(resourceGroup().id, managedIdentity.id, ownerRoleDefinition.id, uniqueId)
+  name: guid(resourceGroup().id, managedIdentity.id, contributorRoleDefinition.id, uniqueId)
   properties: {
     principalId: managedIdentity.properties.principalId
-    roleDefinitionId: ownerRoleDefinition.id
+    roleDefinitionId: contributorRoleDefinition.id
     scope: resourceGroup().id
     principalType: 'ServicePrincipal'
   }

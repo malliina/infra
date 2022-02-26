@@ -75,7 +75,7 @@ module cdn 'cdn.bicep' = {
   name: 'pics-cdn-${uniqueId}'
   params: {
     endpointName: 'pics-endpoint-${uniqueId}'
-    hostname: 'pics2.malliina.com'
+    hostname: 'pics-java-cdn.malliina.com'
     origin: site.properties.defaultHostName
     location: location
   }
