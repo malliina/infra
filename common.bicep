@@ -29,6 +29,18 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   kind: 'StorageV2'
 }
 
+resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
+  name: 'vault-${uniqueId}'
+  location: location
+  properties: {
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    tenantId: tenant().tenantId
+  }
+}
+
 resource cdnProfile 'Microsoft.Cdn/profiles@2020-09-01' = {
   name: 'cdn-ms-${uniqueId}'
   location: location
