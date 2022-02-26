@@ -37,6 +37,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
       name: 'standard'
     }
     tenantId: tenant().tenantId
+    enabledForTemplateDeployment: true
     accessPolicies: [
       {
         objectId: '7e8068fc-2746-4bff-999c-6e2cee755050' // Me
@@ -93,7 +94,7 @@ module pics 'java.bicep' = {
   params: {
     location: location
     managedIdentityId: managedIdentity.id
-    // appSecret: keyVault.getSecret('PICS-APPLICATION-SECRET')
+    appSecret: keyVault.getSecret('PICS-APPLICATION-SECRET')
   }
 }
 

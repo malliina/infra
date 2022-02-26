@@ -31,10 +31,10 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
           value: 'false'
         }
-        // {
-        //   name: 'APPLICATION_SECRET'
-        //   value: appSecret
-        // }
+        {
+          name: 'APPLICATION_SECRET'
+          value: appSecret
+        }
       ]
       linuxFxVersion: 'JAVA|11-java11'
     }
