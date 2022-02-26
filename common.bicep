@@ -18,3 +18,10 @@ resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01
   name: 'workspace-${uniqueId}'
   location: location
 }
+
+module pics 'java.bicep' = {
+  name: 'pics-${uniqueId}'
+  params: {
+    location: location
+  }
+}
