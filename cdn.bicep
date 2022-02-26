@@ -1,5 +1,6 @@
 param endpointName string
-param hostName string
+param hostname string
+param origin string
 
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
@@ -13,7 +14,7 @@ resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
   name: endpointName
   location: location
   properties: {
-    originHostHeader: hostName
+    originHostHeader: origin
     isHttpAllowed: false
     isHttpsAllowed: true
     queryStringCachingBehavior: 'UseQueryString'
@@ -78,9 +79,17 @@ resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
       {
         name: 'server'
         properties: {
-          hostName: hostName
+          hostName: origin
         }
       }
     ]
+  }
+}
+
+resource cdnCustomDomain 'Microsoft.Cdn/profiles/endpoints/customDomains@2020-09-01' = {
+  parent: cdnEndpoint
+  name: 'custom-domain-${uniqueId}'
+  properties: {
+    hostName: hostname
   }
 }

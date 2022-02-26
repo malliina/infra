@@ -1,5 +1,6 @@
 // Java web app with staging (+ production) slot
 
+param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
 
@@ -74,7 +75,8 @@ module cdn 'cdn.bicep' = {
   name: 'pics-cdn-${uniqueId}'
   params: {
     endpointName: 'pics-endpoint-${uniqueId}'
-    hostName: site.properties.defaultHostName
+    hostname: 'pics2.malliina.com'
+    origin: site.properties.defaultHostName
     location: location
   }
 }
