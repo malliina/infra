@@ -1,26 +1,20 @@
 // Java web app with staging (+ production) slot
 
 param location string = resourceGroup().location
+param uniqueId string = uniqueString(resourceGroup().id)
+
+// param resourceGroup string = 'rg-fnxr3ec3ms6mu'
+// param location string = 'northeurope'
 // param resourceGroupName string = resourceGroup().name
 // param hostname string = 'java.malliina.site'
-param uniqueId string = uniqueString(resourceGroup().id)
-param siteName string = 'site-${uniqueId}'
+// param uniqueId string = uniqueString(resourceGroup)
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
-  name: siteName
-  location: location
-  kind: 'linux'
-  sku: {
-    name: 'P1V2'
-    tier: 'PremiumV2'
-  }
-  properties: {
-    reserved: true
-  }
+resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
+  name: 'plan-${uniqueId}'
 }
 
 resource site 'Microsoft.Web/sites@2020-06-01' = {
-  name: siteName
+  name: 'site-${uniqueId}'
   location: location
   properties: {
     siteConfig: {
@@ -45,9 +39,8 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
   }
 }
 
-resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
+resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: 'workspace-${uniqueId}'
-  location: location
 }
 
 resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {

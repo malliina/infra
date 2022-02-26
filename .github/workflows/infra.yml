@@ -23,3 +23,9 @@ jobs:
         region: northeurope
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         template: ./infra.bicep
+
+    - name: Deploy
+      uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: rg-fnxr3ec3ms6mu
+        template: ./common.bicep
