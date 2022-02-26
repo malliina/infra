@@ -57,6 +57,6 @@ module pics 'java.bicep' = {
   name: 'pics-${uniqueId}'
   params: {
     location: location
-    managedIdentityId: managedIdentity.id
+    // managedIdentityId: managedIdentity.id
   }
 }
