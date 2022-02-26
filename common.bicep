@@ -93,7 +93,7 @@ module pics 'java.bicep' = {
   params: {
     location: location
     managedIdentityId: managedIdentity.id
-    appSecret: keyVault.getSecret('PICS_APPLICATION_SECRET')
+    appSecret: keyVault.getSecret('PICS-APPLICATION-SECRET')
   }
 }
 
