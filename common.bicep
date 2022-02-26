@@ -21,7 +21,7 @@ resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01
 
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: 'files-${uniqueId}'
+  name: uniqueId
   location: location
   sku: {
     name: 'Standard_LRS'
