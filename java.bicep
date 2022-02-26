@@ -11,7 +11,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
 }
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
-  name: 'files-${uniqueId}'
+  name: uniqueId
 }
 
 resource site 'Microsoft.Web/sites@2020-06-01' = {
