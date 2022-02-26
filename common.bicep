@@ -38,7 +38,18 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
     }
     tenantId: tenant().tenantId
     accessPolicies: [
-      
+      {
+        objectId: '7e8068fc-2746-4bff-999c-6e2cee755050' // Me
+        permissions: {
+          keys: [
+            'all'
+          ]
+          secrets: [
+            'all'
+          ]
+        }
+        tenantId: tenant().tenantId
+      }
     ]
   }
 }
