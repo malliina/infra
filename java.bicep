@@ -6,8 +6,8 @@ param uniqueId string = uniqueString(resourceGroup().id)
 param originHostname string = 'pics-java.malliina.com'
 param cdnHostname string = 'pics-java-cdn.malliina.com'
 
-// @secure()
-// param appSecret string
+@secure()
+param appSecret string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-${uniqueId}'
