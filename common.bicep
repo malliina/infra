@@ -19,7 +19,6 @@ resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01
   location: location
 }
 
-
 resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   name: uniqueId
   location: location
@@ -38,6 +37,9 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
       name: 'standard'
     }
     tenantId: tenant().tenantId
+    accessPolicies: [
+      
+    ]
   }
 }
 
@@ -80,5 +82,6 @@ module pics 'java.bicep' = {
   params: {
     location: location
     managedIdentityId: managedIdentity.id
+    // appSecret: keyVault.getSecret('PICS_APPLICATION_SECRET')
   }
 }

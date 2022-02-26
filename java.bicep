@@ -6,12 +6,19 @@ param uniqueId string = uniqueString(resourceGroup().id)
 param originHostname string = 'pics-java.malliina.com'
 param cdnHostname string = 'pics-java-cdn.malliina.com'
 
+// @secure()
+// param appSecret string
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-${uniqueId}'
 }
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
   name: uniqueId
+}
+
+resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
+  name: 'vault-${uniqueId}'
 }
 
 resource site 'Microsoft.Web/sites@2020-06-01' = {
@@ -24,6 +31,10 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
           value: 'false'
         }
+        // {
+        //   name: 'APPLICATION_SECRET'
+        //   value: appSecret
+        // }
       ]
       linuxFxVersion: 'JAVA|11-java11'
     }
