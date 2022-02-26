@@ -29,3 +29,4 @@ jobs:
       with:
         resourceGroupName: rg-fnxr3ec3ms6mu
         template: ./common.bicep
+        failOnStdErr: false
