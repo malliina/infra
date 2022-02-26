@@ -3,6 +3,8 @@
 param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
+param originHostname string = 'pics-java.malliina.com'
+param cdnHostname string = 'pics-java-cdn.malliina.com'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-${uniqueId}'
@@ -31,6 +33,40 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     properties: {
       serverFarmId: appServicePlan.id
     }
+  }
+}
+
+// Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
+// Not used when CDN is used, since CDN manages certificates
+
+resource siteCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
+  name: '${site.name}/${originHostname}'
+  properties: {
+    hostNameType: 'Verified'
+    sslState: 'Disabled'
+    customHostNameDnsRecordType: 'CName'
+    siteName: site.name
+  }
+}
+
+resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
+  name: originHostname
+  location: location
+  dependsOn: [
+    siteCustomDomain
+  ]
+  properties: {
+    canonicalName: originHostname
+    serverFarmId: appServicePlan.id
+  }
+}
+
+module siteEnableSni 'sni-enable.bicep' = {
+  name: '${deployment().name}-${originHostname}-sni-enable'
+  params: {
+    certificateThumbprint: certificate.properties.thumbprint
+    hostname: originHostname
+    siteName: site.name
   }
 }
 
@@ -75,7 +111,7 @@ module cdn 'cdn.bicep' = {
   name: 'pics-cdn-${uniqueId}'
   params: {
     endpointName: 'pics-endpoint-${uniqueId}'
-    hostname: 'pics-java-cdn.malliina.com'
+    hostname: cdnHostname
     origin: site.properties.defaultHostName
     location: location
     managedIdentityId: managedIdentityId
