@@ -19,6 +19,14 @@ resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01
   location: location
 }
 
+resource cdnProfile 'Microsoft.Cdn/profiles@2020-09-01' = {
+  name: 'cdn-ms-${uniqueId}'
+  location: location
+  sku: {
+    name: 'Standard_Microsoft'
+  }
+}
+
 module pics 'java.bicep' = {
   name: 'pics-${uniqueId}'
   params: {
