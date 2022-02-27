@@ -26,6 +26,14 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
     name: 'Standard_LRS'
   }
   kind: 'StorageV2'
+
+  resource fileServices 'fileServices' = {
+    name: 'default'
+
+    resource share 'shares' = {
+      name: 'fs-${uniqueId}'
+    }
+  }
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
