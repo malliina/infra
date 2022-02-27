@@ -63,12 +63,12 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
   //   }
   // }
 
-  // resource slots 'slots' = {
-  //   name: 'staging'
-  //   location: location
-  //   properties: {
-  //     serverFarmId: appServicePlan.id
-  //   }
+  resource slots 'slots' = {
+    name: 'staging'
+    location: location
+    properties: {
+      serverFarmId: appServicePlan.id
+    }
 
     // resource settings 'config' = {
     //   name: 'appsettings'
@@ -91,7 +91,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     //     }
     //   }
     // }
-  // }
+  }
 }
 
 // Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
