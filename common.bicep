@@ -120,6 +120,17 @@ module pics 'java.bicep' = {
   }
 }
 
+module api 'api.bicep' = {
+  name: 'api-${uniqueId}'
+  params: {
+    location: location
+    managedIdentityId: managedIdentity.id
+    appSecret: keyVault.getSecret('API-APPLICATION-SECRET')
+    dbPass: keyVault.getSecret('API-DB-PASS')
+    fileShareName: fileShareName
+  }
+}
+
 resource keyVaultPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' = {
   name: '${keyVault.name}/add'
   properties: {
