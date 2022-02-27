@@ -192,9 +192,9 @@ resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-pr
 }
 
 module cdn 'cdn.bicep' = {
-  name: 'pics-assets-cdn-${uniqueId}'
+  name: 'pics-cdn-${uniqueId}'
   params: {
-    endpointName: 'pics-cdn-endpoint-${uniqueId}'
+    endpointName: 'pics-endpoint-${uniqueId}'
     hostname: cdnHostname
     origin: site.properties.defaultHostName
     location: location

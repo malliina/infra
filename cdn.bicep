@@ -95,6 +95,8 @@ resource cdnCustomDomain 'Microsoft.Cdn/profiles/endpoints/customDomains@2020-09
   }
 }
 
+param utcValue string = utcNow()
+
 // didn't find a way to enable custom https for cdn using arm resources, so a script will have to do
 resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'cdn-https-${uniqueId}'
@@ -107,7 +109,7 @@ resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01'
     }
   }
   properties: {
-    // forceUpdateTag: utcValue
+    forceUpdateTag: utcValue
     azPowerShellVersion: '6.4'
     scriptContent: loadTextContent('./scripts/enable-https.ps1')
     environmentVariables: [
