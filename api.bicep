@@ -25,7 +25,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
   name: 'vault-${uniqueId}'
 }
 
-resource site 'Microsoft.Web/sites@2020-06-01' = {
+resource site 'Microsoft.Web/sites@2021-03-01' = {
   name: 'api-${uniqueId}'
   location: location
   properties: {
@@ -61,34 +61,34 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     }
   }
 
-  resource slots 'slots@2021-03-01' = {
+  resource slots 'slots' = {
     name: 'staging'
     location: location
     properties: {
       serverFarmId: appServicePlan.id
     }
 
-    // resource settings 'config' = {
-    //   name: 'appsettings'
-    //   properties: {
-    //     'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-    //     'APPLICATION_SECRET': appSecret
-    //     'DB_PASS': dbPass
-    //   }
-    // }
+    resource settings 'config' = {
+      name: 'appsettings'
+      properties: {
+        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
+        'APPLICATION_SECRET': appSecret
+        'DB_PASS': dbPass
+      }
+    }
 
-    // resource config 'config' = {
-    //   name: 'azurestorageaccounts'
-    //   properties: {
-    //     'files': {
-    //       type: 'AzureFiles'
-    //       shareName: fileShareName
-    //       mountPath: '/files'
-    //       accountName: storage.name      
-    //       accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
-    //     }
-    //   }
-    // }
+    resource config 'config' = {
+      name: 'azurestorageaccounts'
+      properties: {
+        'files': {
+          type: 'AzureFiles'
+          shareName: fileShareName
+          mountPath: '/files'
+          accountName: storage.name      
+          accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+        }
+      }
+    }
   }
 }
 
