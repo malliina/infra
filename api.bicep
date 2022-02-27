@@ -68,14 +68,14 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
       serverFarmId: appServicePlan.id
     }
 
-    resource settings 'config' = {
-      name: 'appsettings'
-      properties: {
-        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-        'APPLICATION_SECRET': appSecret
-        'DB_PASS': dbPass
-      }
-    }
+    // resource settings 'config' = {
+    //   name: 'appsettings'
+    //   properties: {
+    //     'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
+    //     'APPLICATION_SECRET': appSecret
+    //     'DB_PASS': dbPass
+    //   }
+    // }
 
     // resource config 'config' = {
     //   name: 'azurestorageaccounts'
