@@ -123,7 +123,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
 // Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
 // Not used when CDN is used, since CDN manages certificates
 
-resource siteCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
+resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
   name: '${site.name}/${originHostname}'
   properties: {
     hostNameType: 'Verified'
@@ -137,7 +137,7 @@ resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
   name: originHostname
   location: location
   dependsOn: [
-    siteCustomDomain
+    javaCustomDomain
   ]
   properties: {
     canonicalName: originHostname
