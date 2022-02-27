@@ -44,48 +44,6 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
   location: location
   properties: {
     siteConfig: {
-      appSettings: [
-        {
-          name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
-          value: 'false'
-        }
-        {
-          name: 'APPLICATION_SECRET'
-          value: appSecret
-        }
-        {
-          name: 'MICROSOFT_CLIENT_SECRET'
-          value: microsoftSecret
-        }
-        {
-          name: 'GOOGLE_CLIENT_SECRET'
-          value: googleSecret
-        }
-        {
-          name: 'GITHUB_CLIENT_SECRET'
-          value: githubSecret
-        }
-        {
-          name: 'FACEBOOK_CLIENT_SECRET'
-          value: facebookSecret
-        }
-        {
-          name: 'TWITTER_CLIENT_SECRET'
-          value: twitterSecret
-        }
-        {
-          name: 'DB_PASS'
-          value: dbPass
-        }
-        {
-          name: 'AWS_ACCESS_KEY_ID'
-          value: awsAccessKeyId
-        }
-        {
-          name: 'AWS_SECRET_ACCESS_KEY'
-          value: awsSecretAccessKey
-        }
-      ]
       linuxFxVersion: 'JAVA|11-java11'
     }
     httpsOnly: true
@@ -93,6 +51,35 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
   }
   identity: {
     type: 'SystemAssigned'
+  }
+
+  resource settings 'config' = {
+    name: 'appsettings'
+    properties: {
+      'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
+      'APPLICATION_SECRET': appSecret
+      'MICROSOFT_CLIENT_SECRET': microsoftSecret
+      'GOOGLE_CLIENT_SECRET': googleSecret
+      'GITHUB_CLIENT_SECRET': githubSecret
+      'FACEBOOK_CLIENT_SECRET': facebookSecret
+      'TWITTER_CLIENT_SECRET': twitterSecret
+      'DB_PASS': dbPass
+      'AWS_ACCESS_KEY_ID': awsAccessKeyId
+      'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
+    }
+  }
+
+  resource config 'config' = {
+    name: 'azurestorageaccounts'
+    properties: {
+      'files': {
+        type: 'AzureFiles'
+        shareName: fileShareName
+        mountPath: '/files'
+        accountName: storage.name      
+        accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+      }
+    }
   }
 
   resource slots 'slots@2021-03-01' = {
@@ -105,7 +92,16 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     resource settings 'config' = {
       name: 'appsettings'
       properties: {
-        'A': 'B'
+        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
+        'APPLICATION_SECRET': appSecret
+        'MICROSOFT_CLIENT_SECRET': microsoftSecret
+        'GOOGLE_CLIENT_SECRET': googleSecret
+        'GITHUB_CLIENT_SECRET': githubSecret
+        'FACEBOOK_CLIENT_SECRET': facebookSecret
+        'TWITTER_CLIENT_SECRET': twitterSecret
+        'DB_PASS': dbPass
+        'AWS_ACCESS_KEY_ID': awsAccessKeyId
+        'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
       }
     }
 
@@ -119,19 +115,6 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
           accountName: storage.name      
           accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
         }
-      }
-    }
-  }
-
-  resource config 'config' = {
-    name: 'azurestorageaccounts'
-    properties: {
-      'files': {
-        type: 'AzureFiles'
-        shareName: fileShareName
-        mountPath: '/files'
-        accountName: storage.name      
-        accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
       }
     }
   }
