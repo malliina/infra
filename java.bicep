@@ -191,16 +191,16 @@ resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-pr
   }
 }
 
-// module cdn 'cdn.bicep' = {
-//   name: 'pics-cdn-${uniqueId}'
-//   params: {
-//     endpointName: 'pics-endpoint-${uniqueId}'
-//     hostname: cdnHostname
-//     origin: site.properties.defaultHostName
-//     location: location
-//     managedIdentityId: managedIdentityId
-//   }
-// }
+module cdn 'cdn.bicep' = {
+  name: 'pics-assets-cdn-${uniqueId}'
+  params: {
+    endpointName: 'pics-cdn-endpoint-${uniqueId}'
+    hostname: cdnHostname
+    origin: site.properties.defaultHostName
+    location: location
+    managedIdentityId: managedIdentityId
+  }
+}
 
 output txtDomainVerification string = site.properties.customDomainVerificationId
 output sitePrincipalId string = site.identity.principalId
