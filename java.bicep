@@ -123,36 +123,36 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
 // Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
 // Not used when CDN is used, since CDN manages certificates
 
-// resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
-//   name: '${site.name}/${originHostname}'
-//   properties: {
-//     hostNameType: 'Verified'
-//     sslState: 'Disabled'
-//     customHostNameDnsRecordType: 'CName'
-//     siteName: site.name
-//   }
-// }
+resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
+  name: '${site.name}/${originHostname}'
+  properties: {
+    hostNameType: 'Verified'
+    sslState: 'Disabled'
+    customHostNameDnsRecordType: 'CName'
+    siteName: site.name
+  }
+}
 
-// resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
-//   name: originHostname
-//   location: location
-//   dependsOn: [
-//     javaCustomDomain
-//   ]
-//   properties: {
-//     canonicalName: originHostname
-//     serverFarmId: appServicePlan.id
-//   }
-// }
+resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
+  name: originHostname
+  location: location
+  dependsOn: [
+    javaCustomDomain
+  ]
+  properties: {
+    canonicalName: originHostname
+    serverFarmId: appServicePlan.id
+  }
+}
 
-// module siteEnableSni 'sni-enable.bicep' = {
-//   name: '${deployment().name}-${originHostname}-sni-enable'
-//   params: {
-//     certificateThumbprint: certificate.properties.thumbprint
-//     hostname: originHostname
-//     siteName: site.name
-//   }
-// }
+module siteEnableSni 'sni-enable.bicep' = {
+  name: '${deployment().name}-${originHostname}-sni-enable'
+  params: {
+    certificateThumbprint: certificate.properties.thumbprint
+    hostname: originHostname
+    siteName: site.name
+  }
+}
 
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: 'workspace-${uniqueId}'
@@ -192,7 +192,7 @@ resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-pr
 }
 
 module cdn 'cdn.bicep' = {
-  name: 'pics-cdn-${uniqueId}'
+  name: 'pics-java-cdn-${uniqueId}'
   params: {
     endpointName: 'pics-endpoint-${uniqueId}'
     hostname: cdnHostname
