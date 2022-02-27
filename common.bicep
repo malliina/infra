@@ -1,6 +1,8 @@
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
 
+var fileShareName = 'fs-${uniqueId}'
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'plan-${uniqueId}'
   location: location
@@ -31,7 +33,10 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
     name: 'default'
 
     resource share 'shares' = {
-      name: 'fs-${uniqueId}'
+      name: fileShareName
+      properties: {
+        shareQuota: 5
+      }
     }
   }
 }
@@ -111,6 +116,7 @@ module pics 'java.bicep' = {
     facebookSecret: keyVault.getSecret('PICS-FACEBOOK-CLIENT-SECRET')
     awsAccessKeyId: keyVault.getSecret('AWS-ACCESS-KEY-ID')
     awsSecretAccessKey: keyVault.getSecret('AWS-SECRET-ACCESS-KEY')
+    fileShareName: fileShareName
   }
 }
 

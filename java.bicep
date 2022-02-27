@@ -25,6 +25,8 @@ param awsAccessKeyId string
 @secure()
 param awsSecretAccessKey string
 
+param fileShareName string
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-${uniqueId}'
 }
@@ -106,7 +108,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     properties: {
       'files': {
         type: 'AzureFiles'
-        shareName: 'files'
+        shareName: fileShareName
         mountPath: '/files'
         accountName: storage.name      
         accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
