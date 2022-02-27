@@ -61,35 +61,35 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     }
   }
 
-  resource slots 'slots' = {
-    name: 'staging'
-    location: location
-    properties: {
-      serverFarmId: appServicePlan.id
-    }
+  // resource slots 'slots' = {
+  //   name: 'staging'
+  //   location: location
+  //   properties: {
+  //     serverFarmId: appServicePlan.id
+  //   }
 
-    resource settings 'config' = {
-      name: 'appsettings'
-      properties: {
-        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-        'APPLICATION_SECRET': appSecret
-        'DB_PASS': dbPass
-      }
-    }
+  //   resource settings 'config' = {
+  //     name: 'appsettings'
+  //     properties: {
+  //       'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
+  //       'APPLICATION_SECRET': appSecret
+  //       'DB_PASS': dbPass
+  //     }
+  //   }
 
-    resource config 'config' = {
-      name: 'azurestorageaccounts'
-      properties: {
-        'files': {
-          type: 'AzureFiles'
-          shareName: fileShareName
-          mountPath: '/files'
-          accountName: storage.name      
-          accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
-        }
-      }
-    }
-  }
+  //   resource config 'config' = {
+  //     name: 'azurestorageaccounts'
+  //     properties: {
+  //       'files': {
+  //         type: 'AzureFiles'
+  //         shareName: fileShareName
+  //         mountPath: '/files'
+  //         accountName: storage.name      
+  //         accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 // Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
