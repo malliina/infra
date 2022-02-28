@@ -131,6 +131,19 @@ module api 'api.bicep' = {
   }
 }
 
+module logs 'logs.bicep' = {
+  name: 'logs-${uniqueId}'
+  params: {
+    location: location
+    managedIdentityId: managedIdentity.id
+    appSecret: keyVault.getSecret('LOGS-APPLICATION-SECRET')
+    dbPass: keyVault.getSecret('LOGS-DB-PASS')
+    googleSecret: keyVault.getSecret('LOGS-GOOGLE-CLIENT-SECRET')
+    logstreamsPass: keyVault.getSecret('LOGS-LOGSTREAMS-PASS')
+    fileShareName: fileShareName
+  }
+}
+
 resource keyVaultPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' = {
   name: '${keyVault.name}/add'
   properties: {
