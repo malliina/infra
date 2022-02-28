@@ -3,8 +3,8 @@
 param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
-param originHostname string = 'logs2.malliina.com'
-param cdnHostname string = 'logs2-cdn.malliina.com'
+param originHostname string = 'logs.malliina.com'
+param cdnHostname string = 'logs-cdn.malliina.com'
 
 @secure()
 param appSecret string
