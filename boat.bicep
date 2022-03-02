@@ -186,9 +186,9 @@ resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-pr
 }
 
 module cdn 'cdn.bicep' = {
-  name: 'api-cdn-${uniqueId}'
+  name: 'boat-cdn-${uniqueId}'
   params: {
-    endpointName: 'api-endpoint-${uniqueId}'
+    endpointName: 'boat-endpoint-${uniqueId}'
     hostname: cdnHostname
     origin: site.properties.defaultHostName
     location: location
