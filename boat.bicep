@@ -56,7 +56,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
       'APPLICATION_SECRET': appSecret
       'DB_PASS': dbPass
-      'GOOGLE_CLIENT_SECRET': googleSecret
+      'GOOGLE_WEB_CLIENT_SECRET': googleSecret
       'LOGSTREAMS_PASS': logstreamsPass
       'MAPBOX_TOKEN': mapboxToken
       'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
@@ -92,7 +92,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
         'APPLICATION_SECRET': appSecret
         'DB_PASS': dbPass
-        'GOOGLE_CLIENT_SECRET': googleSecret
+        'GOOGLE_WEB_CLIENT_SECRET': googleSecret
         'LOGSTREAMS_PASS': logstreamsPass
         'MAPBOX_TOKEN': mapboxToken
         'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
