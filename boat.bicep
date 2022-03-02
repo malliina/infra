@@ -36,7 +36,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
 }
 
 resource site 'Microsoft.Web/sites@2021-03-01' = {
-  name: 'api-${uniqueId}'
+  name: 'boat-${uniqueId}'
   location: location
   properties: {
     siteConfig: {
@@ -139,21 +139,21 @@ resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
   }
 }
 
-// module siteEnableSni 'sni-enable.bicep' = {
-//   name: '${deployment().name}-${originHostname}-sni-enable'
-//   params: {
-//     certificateThumbprint: certificate.properties.thumbprint
-//     hostname: originHostname
-//     siteName: site.name
-//   }
-// }
+module siteEnableSni 'sni-enable.bicep' = {
+  name: '${deployment().name}-${originHostname}-sni-enable'
+  params: {
+    certificateThumbprint: certificate.properties.thumbprint
+    hostname: originHostname
+    siteName: site.name
+  }
+}
 
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: 'workspace-${uniqueId}'
 }
 
 resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: 'api-diagnostics-${uniqueId}'
+  name: 'boat-diagnostics-${uniqueId}'
   scope: site
   properties: {
     workspaceId: analyticsWorkspace.id
