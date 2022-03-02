@@ -144,6 +144,22 @@ module logs 'logs.bicep' = {
   }
 }
 
+module boat 'boat.bicep' = {
+  name: 'boat-${uniqueId}'
+  params: {
+    location: location
+    managedIdentityId: managedIdentity.id
+    appSecret: keyVault.getSecret('BOAT-APPLICATION-SECRET')
+    dbPass: keyVault.getSecret('BOAT-DB-PASS')
+    googleSecret: keyVault.getSecret('BOAT-GOOGLE-CLIENT-SECRET')
+    logstreamsPass: keyVault.getSecret('BOAT-LOGSTREAMS-PASS')
+    mapboxToken: keyVault.getSecret('BOAT-MAPBOX-TOKEN')
+    microsoftSecret: keyVault.getSecret('BOAT-MICROSOFT-CLIENT-SECRET')
+    fcmApiKey: keyVault.getSecret('BOAT-FCM-API-KEY')
+    fileShareName: fileShareName
+  }
+}
+
 resource keyVaultPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' = {
   name: '${keyVault.name}/add'
   properties: {
