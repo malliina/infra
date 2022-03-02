@@ -139,14 +139,14 @@ resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
   }
 }
 
-// module siteEnableSni 'sni-enable.bicep' = {
-//   name: '${deployment().name}-${originHostname}-sni-enable'
-//   params: {
-//     certificateThumbprint: certificate.properties.thumbprint
-//     hostname: originHostname
-//     siteName: site.name
-//   }
-// }
+module siteEnableSni 'sni-enable.bicep' = {
+  name: '${deployment().name}-${originHostname}-sni-enable'
+  params: {
+    certificateThumbprint: certificate.properties.thumbprint
+    hostname: originHostname
+    siteName: site.name
+  }
+}
 
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: 'workspace-${uniqueId}'
