@@ -66,18 +66,18 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
 
   // Crazy Azure nonsense: Add slots first, then storage mappings
 
-  // resource config 'config' = {
-  //   name: 'azurestorageaccounts'
-  //   properties: {
-  //     'files': {
-  //       type: 'AzureFiles'
-  //       shareName: fileShareName
-  //       mountPath: '/files'
-  //       accountName: storage.name      
-  //       accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
-  //     }
-  //   }
-  // }
+  resource config 'config' = {
+    name: 'azurestorageaccounts'
+    properties: {
+      'files': {
+        type: 'AzureFiles'
+        shareName: fileShareName
+        mountPath: '/files'
+        accountName: storage.name      
+        accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+      }
+    }
+  }
 
   resource slots 'slots' = {
     name: 'staging'
@@ -100,18 +100,18 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       }
     }
 
-    // resource config 'config' = {
-    //   name: 'azurestorageaccounts'
-    //   properties: {
-    //     'files': {
-    //       type: 'AzureFiles'
-    //       shareName: fileShareName
-    //       mountPath: '/files'
-    //       accountName: storage.name      
-    //       accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
-    //     }
-    //   }
-    // }
+    resource config 'config' = {
+      name: 'azurestorageaccounts'
+      properties: {
+        'files': {
+          type: 'AzureFiles'
+          shareName: fileShareName
+          mountPath: '/files'
+          accountName: storage.name      
+          accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+        }
+      }
+    }
   }
 }
 
