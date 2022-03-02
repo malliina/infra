@@ -1,5 +1,6 @@
 // Java web app with staging (+ production) slot
 
+param prefix string
 param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
@@ -36,7 +37,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
 }
 
 resource site 'Microsoft.Web/sites@2021-03-01' = {
-  name: 'boat-${uniqueId}'
+  name: '${prefix}-${uniqueId}'
   location: location
   properties: {
     siteConfig: {
@@ -153,7 +154,7 @@ resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01
 }
 
 resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: 'boat-diagnostics-${uniqueId}'
+  name: '${prefix}-diagnostics-${uniqueId}'
   scope: site
   properties: {
     workspaceId: analyticsWorkspace.id
@@ -186,9 +187,9 @@ resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-pr
 }
 
 module cdn 'cdn.bicep' = {
-  name: 'boat-cdn-${uniqueId}'
+  name: '${prefix}-cdn-${uniqueId}'
   params: {
-    endpointName: 'boat-endpoint-${uniqueId}'
+    endpointName: '${prefix}-endpoint-${uniqueId}'
     hostname: cdnHostname
     origin: site.properties.defaultHostName
     location: location

@@ -148,6 +148,7 @@ module boat 'boat.bicep' = {
   name: 'boat-${uniqueId}'
   params: {
     location: location
+    prefix: 'boat'
     managedIdentityId: managedIdentity.id
     appSecret: keyVault.getSecret('BOAT-APPLICATION-SECRET')
     dbPass: keyVault.getSecret('BOAT-DB-PASS')
