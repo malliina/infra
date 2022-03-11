@@ -117,6 +117,7 @@ module pics 'java.bicep' = {
     awsAccessKeyId: keyVault.getSecret('AWS-ACCESS-KEY-ID')
     awsSecretAccessKey: keyVault.getSecret('AWS-SECRET-ACCESS-KEY')
     fileShareName: fileShareName
+    logstreamsPass: keyVault.getSecret('PICS-LOGSTREAMS-PASS')
   }
 }
 
@@ -128,6 +129,7 @@ module api 'api.bicep' = {
     appSecret: keyVault.getSecret('API-APPLICATION-SECRET')
     dbPass: keyVault.getSecret('API-DB-PASS')
     fileShareName: fileShareName
+    logstreamsPass: keyVault.getSecret('API-LOGSTREAMS-PASS')
   }
 }
 

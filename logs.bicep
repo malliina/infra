@@ -51,6 +51,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'DB_PASS': dbPass
       'GOOGLE_CLIENT_SECRET': googleSecret
       'LOGSTREAMS_PASS': logstreamsPass
+      'LOGSTREAMS_ENABLED': 'true'
     }
   }
 
@@ -84,6 +85,26 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'DB_PASS': dbPass
         'GOOGLE_CLIENT_SECRET': googleSecret
         'LOGSTREAMS_PASS': logstreamsPass
+        'LOGSTREAMS_ENABLED': 'true'
+      }
+    }
+
+    resource logSettings 'config' = {
+      name: 'logs'
+      properties: {
+         applicationLogs: {
+            fileSystem: {
+              level: 'Information'
+            }
+         }
+         httpLogs: {
+            fileSystem: {
+               enabled: true
+            }
+         }
+         detailedErrorMessages: {
+            enabled: true
+         }
       }
     }
 

@@ -10,6 +10,8 @@ param cdnHostname string = 'api-cdn.malliina.com'
 param appSecret string
 @secure()
 param dbPass string
+@secure()
+param logstreamsPass string
 
 param fileShareName string
 
@@ -45,6 +47,8 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
       'APPLICATION_SECRET': appSecret
       'DB_PASS': dbPass
+      'LOGSTREAMS_PASS': logstreamsPass
+      'LOGSTREAMS_ENABLED': 'true'
     }
   }
 
@@ -76,6 +80,8 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
         'APPLICATION_SECRET': appSecret
         'DB_PASS': dbPass
+        'LOGSTREAMS_PASS': logstreamsPass
+        'LOGSTREAMS_ENABLED': 'true'
       }
     }
 

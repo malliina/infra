@@ -24,6 +24,8 @@ param facebookSecret string
 param awsAccessKeyId string
 @secure()
 param awsSecretAccessKey string
+@secure()
+param logstreamsPass string
 
 param fileShareName string
 
@@ -66,6 +68,8 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
       'DB_PASS': dbPass
       'AWS_ACCESS_KEY_ID': awsAccessKeyId
       'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
+      'LOGSTREAMS_PASS': logstreamsPass
+      'LOGSTREAMS_ENABLED': 'true'
     }
   }
 
@@ -102,6 +106,8 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
         'DB_PASS': dbPass
         'AWS_ACCESS_KEY_ID': awsAccessKeyId
         'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
+        'LOGSTREAMS_PASS': logstreamsPass
+        'LOGSTREAMS_ENABLED': 'true'
       }
     }
 

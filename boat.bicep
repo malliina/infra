@@ -58,6 +58,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'DB_PASS': dbPass
       'GOOGLE_WEB_CLIENT_SECRET': googleSecret
       'LOGSTREAMS_PASS': logstreamsPass
+      'LOGSTREAMS_ENABLED': 'true'
       'MAPBOX_TOKEN': mapboxToken
       'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
       'FCM_API_KEY': fcmApiKey
@@ -94,6 +95,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'DB_PASS': dbPass
         'GOOGLE_WEB_CLIENT_SECRET': googleSecret
         'LOGSTREAMS_PASS': logstreamsPass
+        'LOGSTREAMS_ENABLED': 'true'
         'MAPBOX_TOKEN': mapboxToken
         'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
         'FCM_API_KEY': fcmApiKey
