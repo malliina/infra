@@ -11,7 +11,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
     name: 'P1V2'
     tier: 'PremiumV2'
   }
-  properties: {
+  properties: { 
     reserved: true
   }
 }

@@ -49,6 +49,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'DB_PASS': dbPass
       'LOGSTREAMS_PASS': logstreamsPass
       'LOGSTREAMS_ENABLED': 'true'
+      'JAVA_OPTS': '-Xmx1024m'
     }
   }
 
@@ -82,6 +83,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'DB_PASS': dbPass
         'LOGSTREAMS_PASS': logstreamsPass
         'LOGSTREAMS_ENABLED': 'true'
+        'JAVA_OPTS': '-Xmx1024m'
       }
     }
 

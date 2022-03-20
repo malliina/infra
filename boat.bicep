@@ -62,6 +62,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'MAPBOX_TOKEN': mapboxToken
       'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
       'FCM_API_KEY': fcmApiKey
+      'JAVA_OPTS': '-Xmx1024m'
     }
   }
 
@@ -99,6 +100,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'MAPBOX_TOKEN': mapboxToken
         'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
         'FCM_API_KEY': fcmApiKey
+        'JAVA_OPTS': '-Xmx1024m'
       }
     }
 
