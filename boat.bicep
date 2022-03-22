@@ -131,6 +131,9 @@ module wwwDomain 'appdomain.bicep' = {
 
 module apiDomain 'appdomain.bicep' = {
   name: '${prefix}-api-domain'
+  dependsOn: [
+    wwwDomain
+  ]
   params: {
     appServicePlanId: appServicePlan.id
     origin: 'api.boat-tracker.com'
