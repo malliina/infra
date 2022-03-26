@@ -47,6 +47,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
   properties: {
     siteConfig: {
       linuxFxVersion: 'JAVA|11-java11'
+      healthCheckPath: '/health'
     }
     httpsOnly: true
     serverFarmId: appServicePlan.id

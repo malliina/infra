@@ -102,7 +102,7 @@ resource managedIdentityRole 'Microsoft.Authorization/roleAssignments@2021-04-01
   }
 }
 
-module pics 'java.bicep' = {
+module pics 'pics.bicep' = {
   name: 'pics-${uniqueId}'
   params: {
     location: location
