@@ -86,6 +86,11 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     name: 'staging'
     location: location
     properties: {
+      siteConfig: {
+        linuxFxVersion: 'JAVA|11-java11'
+        healthCheckPath: '/health'
+      }
+      httpsOnly: true
       serverFarmId: appServicePlan.id
     }
 
