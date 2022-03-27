@@ -71,7 +71,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
       'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
       'LOGSTREAMS_PASS': logstreamsPass
       'LOGSTREAMS_ENABLED': 'true'
-      'JAVA_OPTS': '-Xmx1024m'
+      'JAVA_OPTS': '-Xmx512m'
     }
   }
 
@@ -115,7 +115,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
         'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
         'LOGSTREAMS_PASS': logstreamsPass
         'LOGSTREAMS_ENABLED': 'true'
-        'JAVA_OPTS': '-Xmx1024m'
+        'JAVA_OPTS': '-Xmx384m'
       }
     }
 
