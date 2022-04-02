@@ -46,7 +46,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
   location: location
   properties: {
     siteConfig: {
-      linuxFxVersion: 'JAVA|11-java11'
+      windowsFxVersion: 'JAVA|11-java11'
       healthCheckPath: '/health'
     }
     httpsOnly: true
@@ -93,8 +93,9 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     location: location
     properties: {
       siteConfig: {
-        linuxFxVersion: 'JAVA|11-java11'
+        windowsFxVersion: 'JAVA|11-java11'
         healthCheckPath: '/health'
+        autoSwapSlotName: 'production'
       }
       httpsOnly: true
       serverFarmId: appServicePlan.id
