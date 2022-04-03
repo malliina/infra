@@ -39,6 +39,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       javaContainerVersion: 'SE'
       javaVersion: '11'
       alwaysOn: true
+      webSocketsEnabled: true
     }
     httpsOnly: true
     serverFarmId: appServicePlan.id
@@ -86,6 +87,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         javaContainerVersion: 'SE'
         javaVersion: '11'
         alwaysOn: true
+        webSocketsEnabled: true
       }
       httpsOnly: true
       serverFarmId: appServicePlan.id

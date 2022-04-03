@@ -37,6 +37,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       javaContainerVersion: 'SE'
       javaVersion: '11'
       alwaysOn: true
+      webSocketsEnabled: true
     }
     httpsOnly: true
     serverFarmId: appServicePlan.id
@@ -77,13 +78,13 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     location: location
     properties: {
       siteConfig: {
-        windowsFxVersion: 'JAVA|11-java11'
         healthCheckPath: '/health'
         autoSwapSlotName: 'production'
         javaContainer: 'JAVA'
         javaContainerVersion: 'SE'
         javaVersion: '11'
         alwaysOn: true
+        webSocketsEnabled: true
       }
       httpsOnly: true
       serverFarmId: appServicePlan.id
