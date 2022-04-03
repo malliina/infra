@@ -3,19 +3,6 @@ param uniqueId string = uniqueString(resourceGroup().id)
 
 var fileShareName = 'fs-${uniqueId}'
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
-  name: 'plan-${uniqueId}'
-  location: location
-  kind: 'linux'
-  sku: {
-    name: 'P1V2'
-    tier: 'PremiumV2'
-  }
-  properties: { 
-    reserved: true
-  }
-}
-
 resource appServicePlanWin 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'plan-win-${uniqueId}'
   location: location
