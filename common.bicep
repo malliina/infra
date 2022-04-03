@@ -16,6 +16,16 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
+resource appServicePlanWin 'Microsoft.Web/serverfarms@2021-02-01' = {
+  name: 'plan-win-${uniqueId}'
+  location: location
+  kind: 'windows'
+  sku: {
+    name: 'P1V2'
+    tier: 'PremiumV2'
+  }
+}
+
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
   name: 'workspace-${uniqueId}'
   location: location
@@ -122,7 +132,7 @@ module pics 'pics.bicep' = {
 }
 
 module api 'api.bicep' = {
-  name: 'api-${uniqueId}'
+  name: 'api-win-${uniqueId}'
   params: {
     location: location
     managedIdentityId: managedIdentity.id

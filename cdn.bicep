@@ -83,6 +83,12 @@ resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
           hostName: origin
         }
       }
+      {
+        name: 'server-win'
+        properties: {
+          hostName: origin
+        }
+      }
     ]
   }
 }
