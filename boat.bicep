@@ -25,7 +25,7 @@ param fcmApiKey string
 param fileShareName string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
-  name: 'plan-${uniqueId}'
+  name: 'plan-win-${uniqueId}'
 }
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
@@ -37,12 +37,16 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
 }
 
 resource site 'Microsoft.Web/sites@2021-03-01' = {
-  name: '${prefix}-${uniqueId}'
+  name: '${prefix}-win-${uniqueId}'
   location: location
   properties: {
     siteConfig: {
-      windowsFxVersion: 'JAVA|11-java11'
       healthCheckPath: '/health'
+      javaContainer: 'JAVA'
+      javaContainerVersion: 'SE'
+      javaVersion: '11'
+      alwaysOn: true
+      webSocketsEnabled: true
     }
     httpsOnly: true
     serverFarmId: appServicePlan.id
@@ -75,7 +79,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'files': {
         type: 'AzureFiles'
         shareName: fileShareName
-        mountPath: '/files'
+        mountPath: '\\mounts\\files'
         accountName: storage.name      
         accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
       }
@@ -87,9 +91,13 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     location: location
     properties: {
       siteConfig: {
-        windowsFxVersion: 'JAVA|11-java11'
         healthCheckPath: '/health'
         autoSwapSlotName: 'production'
+        javaContainer: 'JAVA'
+        javaContainerVersion: 'SE'
+        javaVersion: '11'
+        alwaysOn: true
+        webSocketsEnabled: true
       }
       httpsOnly: true
       serverFarmId: appServicePlan.id
@@ -117,7 +125,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'files': {
           type: 'AzureFiles'
           shareName: fileShareName
-          mountPath: '/files'
+          mountPath: '\\mounts\\files'
           accountName: storage.name      
           accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
         }
