@@ -21,6 +21,10 @@ param mapboxToken string
 param microsoftSecret string
 @secure()
 param fcmApiKey string
+@secure()
+param awsAccessKeyId string
+@secure()
+param awsSecretAccessKey string
 
 param fileShareName string
 
@@ -68,6 +72,8 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
       'FCM_API_KEY': fcmApiKey
       'JAVA_OPTS': '-Xmx512m'
+      'AWS_ACCESS_KEY_ID': awsAccessKeyId
+      'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
     }
   }
 
@@ -116,6 +122,8 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
         'FCM_API_KEY': fcmApiKey
         'JAVA_OPTS': '-Xmx256m'
+        'AWS_ACCESS_KEY_ID': awsAccessKeyId
+        'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
       }
     }
 

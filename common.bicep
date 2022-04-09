@@ -156,6 +156,8 @@ module boat 'boat.bicep' = {
     mapboxToken: keyVault.getSecret('BOAT-MAPBOX-TOKEN')
     microsoftSecret: keyVault.getSecret('BOAT-MICROSOFT-CLIENT-SECRET')
     fcmApiKey: keyVault.getSecret('BOAT-FCM-API-KEY')
+    awsAccessKeyId: keyVault.getSecret('BOAT-AWS-ACCESS-KEY-ID')
+    awsSecretAccessKey: keyVault.getSecret('BOAT-AWS-SECRET-ACCESS-KEY')
     fileShareName: fileShareName
   }
 }
