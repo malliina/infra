@@ -5,6 +5,8 @@ param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
 param originHostname string = 'api.malliina.com'
 param cdnHostname string = 'api-cdn.malliina.com'
+param mvnOriginHostname string = 'mvn.malliina.com'
+param mvnCdnHostname string = 'mvn-cdn.malliina.com'
 
 @secure()
 param appSecret string
@@ -151,6 +153,37 @@ module siteEnableSni 'sni-enable.bicep' = {
   }
 }
 
+resource mvnCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
+  name: '${site.name}/${mvnOriginHostname}'
+  properties: {
+    hostNameType: 'Verified'
+    sslState: 'Disabled'
+    customHostNameDnsRecordType: 'CName'
+    siteName: site.name
+  }
+}
+
+resource mvnCertificate 'Microsoft.Web/certificates@2021-02-01' = {
+  name: mvnOriginHostname
+  location: location
+  dependsOn: [
+    mvnCustomDomain
+  ]
+  properties: {
+    canonicalName: mvnOriginHostname
+    serverFarmId: appServicePlan.id
+  }
+}
+
+module mvnSiteEnableSni 'sni-enable.bicep' = {
+  name: '${deployment().name}-${mvnOriginHostname}-sni-enable'
+  params: {
+    certificateThumbprint: mvnCertificate.properties.thumbprint
+    hostname: mvnOriginHostname
+    siteName: site.name
+  }
+}
+
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: 'workspace-${uniqueId}'
 }
@@ -193,6 +226,17 @@ module cdn 'cdn.bicep' = {
   params: {
     endpointName: 'api-endpoint-${uniqueId}'
     hostname: cdnHostname
+    origin: site.properties.defaultHostName
+    location: location
+    managedIdentityId: managedIdentityId
+  }
+}
+
+module mvnCdn 'cdn.bicep' = {
+  name: 'mvn-cdn-${uniqueId}'
+  params: {
+    endpointName: 'mvn-endpoint-${uniqueId}'
+    hostname: mvnCdnHostname
     origin: site.properties.defaultHostName
     location: location
     managedIdentityId: managedIdentityId
