@@ -3,9 +3,12 @@
 param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
-param originHostname string = 'api.malliina.com'
+
+var originHostnames = [
+  'api.malliina.com'
+  'mvn.malliina.com'
+]
 param cdnHostname string = 'api-cdn.malliina.com'
-param mvnOriginHostname string = 'mvn.malliina.com'
 param mvnCdnHostname string = 'mvn-cdn.malliina.com'
 
 @secure()
@@ -122,67 +125,39 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
 // Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
 // Not used when CDN is used, since CDN manages certificates
 
-resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
-  name: '${site.name}/${originHostname}'
+@batchSize(1)
+resource javaCustomDomains 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = [for hostname in originHostnames: {
+  name: '${site.name}/${hostname}'
   properties: {
     hostNameType: 'Verified'
     sslState: 'Disabled'
     customHostNameDnsRecordType: 'CName'
     siteName: site.name
   }
-}
+}]
 
-resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
-  name: originHostname
+@batchSize(1)
+resource certificates 'Microsoft.Web/certificates@2021-02-01' = [for i in range(0, length(originHostnames)): {
+  name: originHostnames[i]
   location: location
   dependsOn: [
-    javaCustomDomain
+    javaCustomDomains[i]
   ]
   properties: {
-    canonicalName: originHostname
+    canonicalName: originHostnames[i]
     serverFarmId: appServicePlan.id
   }
-}
+}]
 
-module siteEnableSni 'sni-enable.bicep' = {
-  name: '${deployment().name}-${originHostname}-sni-enable'
+@batchSize(1)
+module siteEnableSni 'sni-enable.bicep' = [for i in range(0 ,length(originHostnames)): {
+  name: '${deployment().name}-${originHostnames[i]}-sni-enable'
   params: {
-    certificateThumbprint: certificate.properties.thumbprint
-    hostname: originHostname
+    certificateThumbprint: certificates[i].properties.thumbprint
+    hostname: originHostnames[i]
     siteName: site.name
   }
-}
-
-resource mvnCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
-  name: '${site.name}/${mvnOriginHostname}'
-  properties: {
-    hostNameType: 'Verified'
-    sslState: 'Disabled'
-    customHostNameDnsRecordType: 'CName'
-    siteName: site.name
-  }
-}
-
-resource mvnCertificate 'Microsoft.Web/certificates@2021-02-01' = {
-  name: mvnOriginHostname
-  location: location
-  dependsOn: [
-    mvnCustomDomain
-  ]
-  properties: {
-    canonicalName: mvnOriginHostname
-    serverFarmId: appServicePlan.id
-  }
-}
-
-module mvnSiteEnableSni 'sni-enable.bicep' = {
-  name: '${deployment().name}-${mvnOriginHostname}-sni-enable'
-  params: {
-    certificateThumbprint: mvnCertificate.properties.thumbprint
-    hostname: mvnOriginHostname
-    siteName: site.name
-  }
-}
+}]
 
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: 'workspace-${uniqueId}'
@@ -225,18 +200,10 @@ module cdn 'cdn.bicep' = {
   name: 'api-cdn-${uniqueId}'
   params: {
     endpointName: 'api-endpoint-${uniqueId}'
-    hostname: cdnHostname
-    origin: site.properties.defaultHostName
-    location: location
-    managedIdentityId: managedIdentityId
-  }
-}
-
-module mvnCdn 'cdn.bicep' = {
-  name: 'mvn-cdn-${uniqueId}'
-  params: {
-    endpointName: 'mvn-endpoint-${uniqueId}'
-    hostname: mvnCdnHostname
+    hostnames: [
+      cdnHostname
+      mvnCdnHostname
+    ]
     origin: site.properties.defaultHostName
     location: location
     managedIdentityId: managedIdentityId

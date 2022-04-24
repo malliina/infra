@@ -1,5 +1,5 @@
 param endpointName string
-param hostname string
+param hostnames array
 param origin string
 param managedIdentityId string
 
@@ -87,19 +87,21 @@ resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
   }
 }
 
-resource cdnCustomDomain 'Microsoft.Cdn/profiles/endpoints/customDomains@2020-09-01' = {
+var hostnameCount = length(hostnames)
+
+resource cdnCustomDomains 'Microsoft.Cdn/profiles/endpoints/customDomains@2020-09-01' = [for i in range(0, hostnameCount): {
   parent: cdnEndpoint
-  name: 'custom-domain-${uniqueId}'
+  name: (i == 0) ? 'custom-domain-${uniqueId}' : 'custom-domain-${i}-${uniqueId}'
   properties: {
-    hostName: hostname
+    hostName: hostnames[i]
   }
-}
+}]
 
 param utcValue string = utcNow()
 
 // didn't find a way to enable custom https for cdn using arm resources, so a script will have to do
-resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-  name: 'cdn-https-${uniqueId}'
+resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01' = [for i in range(0, hostnameCount): {
+  name: (i == 0) ? 'cdn-https-${uniqueId}' : 'cdn-https-${i}-${uniqueId}'
   location: location
   kind: 'AzurePowerShell'
   identity: {
@@ -127,11 +129,11 @@ resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01'
       }
       {
         name: 'CustomDomainName'
-        value: cdnCustomDomain.name
+        value: cdnCustomDomains[i].name
       }
     ]
     retentionInterval: 'P1D'
     cleanupPreference: 'OnSuccess'
     timeout: 'PT1H'
   }
-}
+}]

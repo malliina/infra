@@ -218,7 +218,9 @@ module cdn 'cdn.bicep' = {
   name: 'pics-cdn-${uniqueId}'
   params: {
     endpointName: 'pics-endpoint-${uniqueId}'
-    hostname: cdnHostname
+    hostnames: [
+      cdnHostname
+    ]
     origin: site.properties.defaultHostName
     location: location
     managedIdentityId: managedIdentityId

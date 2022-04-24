@@ -215,7 +215,9 @@ module cdn 'cdn.bicep' = {
   name: 'logs-cdn-${uniqueId}'
   params: {
     endpointName: 'logs-endpoint-${uniqueId}'
-    hostname: cdnHostname
+    hostnames: [
+      cdnHostname
+    ]
     origin: site.properties.defaultHostName
     location: location
     managedIdentityId: managedIdentityId
