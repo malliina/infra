@@ -28,11 +28,11 @@ resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
   }
 }
 
-// module siteEnableSni 'sni-enable.bicep' = {
-//   name: '${deployment().name}-${origin}-sni-enable'
-//   params: {
-//     certificateThumbprint: certificate.properties.thumbprint
-//     hostname: origin
-//     siteName: sitename
-//   }
-// }
+module siteEnableSni 'sni-enable.bicep' = {
+  name: '${deployment().name}-${origin}-sni-enable'
+  params: {
+    certificateThumbprint: certificate.properties.thumbprint
+    hostname: origin
+    siteName: sitename
+  }
+}
