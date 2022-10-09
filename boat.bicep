@@ -116,6 +116,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'APPLICATION_SECRET': appSecret
         'DB_PASS': dbPass
         'GOOGLE_WEB_CLIENT_SECRET': googleSecret
+        'LOGSTREAMS_USER': 'boat-staging'
         'LOGSTREAMS_PASS': logstreamsPass
         'LOGSTREAMS_ENABLED': 'true'
         'MAPBOX_TOKEN': mapboxToken

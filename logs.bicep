@@ -100,6 +100,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         'APPLICATION_SECRET': appSecret
         'DB_PASS': dbPass
         'GOOGLE_CLIENT_SECRET': googleSecret
+        'LOGSTREAMS_USER': 'logstreams-staging'
         'LOGSTREAMS_PASS': logstreamsPass
         'LOGSTREAMS_ENABLED': 'true'
         'JAVA_OPTS': '-Xmx256m'
