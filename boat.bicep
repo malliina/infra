@@ -66,6 +66,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'APPLICATION_SECRET': appSecret
       'DB_PASS': dbPass
       'GOOGLE_WEB_CLIENT_SECRET': googleSecret
+      'LOGSTREAMS_USER': 'logstreams'
       'LOGSTREAMS_PASS': logstreamsPass
       'LOGSTREAMS_ENABLED': 'true'
       'MAPBOX_TOKEN': mapboxToken
@@ -74,6 +75,15 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'JAVA_OPTS': '-Xmx512m'
       'AWS_ACCESS_KEY_ID': awsAccessKeyId
       'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
+    }
+  }
+
+  resource slotConfig 'config' = {
+    name: 'slotConfigNames'
+    properties: {
+      appSettingNames: [
+        'LOGSTREAMS_USER'
+      ]
     }
   }
 

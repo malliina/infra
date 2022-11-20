@@ -73,9 +73,19 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
       'DB_PASS': dbPass
       'AWS_ACCESS_KEY_ID': awsAccessKeyId
       'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
+      'LOGSTREAMS_USER': 'pics'
       'LOGSTREAMS_PASS': logstreamsPass
       'LOGSTREAMS_ENABLED': 'true'
       'JAVA_OPTS': '-Xmx512m'
+    }
+  }
+
+  resource slotConfig 'config' = {
+    name: 'slotConfigNames'
+    properties: {
+      appSettingNames: [
+        'LOGSTREAMS_USER'
+      ]
     }
   }
 

@@ -57,9 +57,19 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
       'APPLICATION_SECRET': appSecret
       'DB_PASS': dbPass
+      'LOGSTREAMS_USER': 'api'
       'LOGSTREAMS_PASS': logstreamsPass
       'LOGSTREAMS_ENABLED': 'true'
       'JAVA_OPTS': '-Xmx512m'
+    }
+  }
+
+  resource slotConfig 'config' = {
+    name: 'slotConfigNames'
+    properties: {
+      appSettingNames: [
+        'LOGSTREAMS_USER'
+      ]
     }
   }
 
