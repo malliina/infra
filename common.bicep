@@ -3,7 +3,7 @@ param uniqueId string = uniqueString(resourceGroup().id)
 
 var fileShareName = 'fs-${uniqueId}'
 
-resource appServicePlanWin 'Microsoft.Web/serverfarms@2021-02-01' = {
+resource appServicePlanWin 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'plan-win-${uniqueId}'
   location: location
   kind: 'windows'
@@ -38,7 +38,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   }
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
+resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: 'vault-${uniqueId}'
   location: location
   properties: {
@@ -65,6 +65,15 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   }
 }
 
+module datalake 'database.bicep' = {
+  name: 'datalake-${uniqueId}'
+  params: {
+    location: location
+    adminLogin: 'admin'
+    adminPassword: keyVault.getSecret('ADMIN-DB-PASS')
+  }
+}
+
 resource cdnProfile 'Microsoft.Cdn/profiles@2020-09-01' = {
   name: 'cdn-ms-${uniqueId}'
   location: location
@@ -74,7 +83,7 @@ resource cdnProfile 'Microsoft.Cdn/profiles@2020-09-01' = {
 }
 
 // https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
-resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
   name: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
 }
 
@@ -89,12 +98,11 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-
 }
 
 // https://github.com/Azure/azure-docs-bicep-samples/blob/main/samples/deployment-script/deploymentscript-keyvault-mi.bicep
-resource managedIdentityRole 'Microsoft.Authorization/roleAssignments@2021-04-01-preview' = {
+resource managedIdentityRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, managedIdentity.id, contributorRoleDefinition.id, uniqueId)
   properties: {
     principalId: managedIdentity.properties.principalId
     roleDefinitionId: contributorRoleDefinition.id
-    scope: resourceGroup().id
     principalType: 'ServicePrincipal'
   }
 }
