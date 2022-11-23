@@ -1,5 +1,5 @@
 // Java web app with staging (+ production) slot
-
+param prefix string
 param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
@@ -129,42 +129,28 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
   }
 }
 
-// Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
-// Not used when CDN is used, since CDN manages certificates
-
-@batchSize(1)
-resource javaCustomDomains 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = [for hostname in originHostnames: {
-  name: '${site.name}/${hostname}'
-  properties: {
-    hostNameType: 'Verified'
-    sslState: 'Disabled'
-    customHostNameDnsRecordType: 'CName'
-    siteName: site.name
-  }
-}]
-
-@batchSize(1)
-resource certificates 'Microsoft.Web/certificates@2021-02-01' = [for i in range(0, length(originHostnames)): {
-  name: originHostnames[i]
-  location: location
-  dependsOn: [
-    javaCustomDomains[i]
-  ]
-  properties: {
-    canonicalName: originHostnames[i]
-    serverFarmId: appServicePlan.id
-  }
-}]
-
-@batchSize(1)
-module siteEnableSni 'sni-enable.bicep' = [for i in range(0 ,length(originHostnames)): {
-  name: '${deployment().name}-${originHostnames[i]}-sni-enable'
+module apiDomain 'appdomain.bicep' = {
+  name: '${prefix}-api-domain'
   params: {
-    certificateThumbprint: certificates[i].properties.thumbprint
-    hostname: originHostnames[i]
-    siteName: site.name
+    appServicePlanId: appServicePlan.id
+    origin: originHostnames[0]
+    sitename: site.name
+    location: location
   }
-}]
+}
+
+module mvnDomain 'appdomain.bicep' = {
+  name: '${prefix}-mvn-domain'
+  dependsOn: [
+    apiDomain
+  ]
+  params: {
+    appServicePlanId: appServicePlan.id
+    origin: originHostnames[1]
+    sitename: site.name
+    location: location
+  }
+}
 
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: 'workspace-${uniqueId}'

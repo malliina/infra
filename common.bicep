@@ -110,6 +110,7 @@ resource managedIdentityRole 'Microsoft.Authorization/roleAssignments@2022-04-01
 module pics 'pics.bicep' = {
   name: 'pics-${uniqueId}'
   params: {
+    prefix: 'pics'
     location: location
     managedIdentityId: managedIdentity.id
     appSecret: keyVault.getSecret('PICS-APPLICATION-SECRET')
@@ -129,6 +130,7 @@ module pics 'pics.bicep' = {
 module api 'api.bicep' = {
   name: 'api-win-${uniqueId}'
   params: {
+    prefix: 'api'
     location: location
     managedIdentityId: managedIdentity.id
     appSecret: keyVault.getSecret('API-APPLICATION-SECRET')
@@ -141,6 +143,7 @@ module api 'api.bicep' = {
 module logs 'logs.bicep' = {
   name: 'logs-${uniqueId}'
   params: {
+    prefix: 'logs'
     location: location
     managedIdentityId: managedIdentity.id
     appSecret: keyVault.getSecret('LOGS-APPLICATION-SECRET')

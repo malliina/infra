@@ -6,7 +6,7 @@ param adminLogin string
 param adminPassword string
 
 resource database 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
-  name: 'vault-${uniqueId}'
+  name: 'database-${uniqueId}'
   location: location
   sku: {
     name: 'Standard_B2s'

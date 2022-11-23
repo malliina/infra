@@ -1,5 +1,5 @@
 // Java web app with staging (+ production) slot
-
+param prefix string
 param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
@@ -144,34 +144,13 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
 // Adapted from https://github.com/Azure/bicep/blob/main/docs/examples/301/function-app-with-custom-domain-managed-certificate/main.bicep
 // Not used when CDN is used, since CDN manages certificates
 
-resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
-  name: '${site.name}/${originHostname}'
-  properties: {
-    hostNameType: 'Verified'
-    sslState: 'Disabled'
-    customHostNameDnsRecordType: 'CName'
-    siteName: site.name
-  }
-}
-
-resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
-  name: originHostname
-  location: location
-  dependsOn: [
-    javaCustomDomain
-  ]
-  properties: {
-    canonicalName: originHostname
-    serverFarmId: appServicePlan.id
-  }
-}
-
-module siteEnableSni 'sni-enable.bicep' = {
-  name: '${deployment().name}-${originHostname}-sni-enable'
+module appDomain 'appdomain.bicep' = {
+  name: '${prefix}-domain'
   params: {
-    certificateThumbprint: certificate.properties.thumbprint
-    hostname: originHostname
-    siteName: site.name
+    appServicePlanId: appServicePlan.id
+    origin: originHostname
+    sitename: site.name
+    location: location
   }
 }
 
