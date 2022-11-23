@@ -69,7 +69,7 @@ module datalake 'database.bicep' = {
   name: 'datalake-${uniqueId}'
   params: {
     location: location
-    adminLogin: 'admin'
+    adminLogin: 'malliina'
     adminPassword: keyVault.getSecret('ADMIN-DB-PASS')
   }
 }
