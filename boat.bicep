@@ -36,10 +36,6 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
   name: uniqueId
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
-  name: 'vault-${uniqueId}'
-}
-
 resource site 'Microsoft.Web/sites@2021-03-01' = {
   name: '${prefix}-win-${uniqueId}'
   location: location
@@ -62,19 +58,19 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
   resource settings 'config' = {
     name: 'appsettings'
     properties: {
-      'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-      'APPLICATION_SECRET': appSecret
-      'DB_PASS': dbPass
-      'GOOGLE_WEB_CLIENT_SECRET': googleSecret
-      'LOGSTREAMS_USER': 'logstreams'
-      'LOGSTREAMS_PASS': logstreamsPass
-      'LOGSTREAMS_ENABLED': 'true'
-      'MAPBOX_TOKEN': mapboxToken
-      'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
-      'FCM_API_KEY': fcmApiKey
-      'JAVA_OPTS': '-Xmx512m'
-      'AWS_ACCESS_KEY_ID': awsAccessKeyId
-      'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
+      WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+      APPLICATION_SECRET: appSecret
+      DB_PASS: dbPass
+      GOOGLE_WEB_CLIENT_SECRET: googleSecret
+      LOGSTREAMS_USER: 'logstreams'
+      LOGSTREAMS_PASS: logstreamsPass
+      LOGSTREAMS_ENABLED: 'true'
+      MAPBOX_TOKEN: mapboxToken
+      MICROSOFT_WEB_CLIENT_SECRET: microsoftSecret
+      FCM_API_KEY: fcmApiKey
+      JAVA_OPTS: '-Xmx512m'
+      AWS_ACCESS_KEY_ID: awsAccessKeyId
+      AWS_SECRET_ACCESS_KEY: awsSecretAccessKey
     }
   }
 
@@ -92,7 +88,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
   resource config 'config' = {
     name: 'azurestorageaccounts'
     properties: {
-      'files': {
+      files: {
         type: 'AzureFiles'
         shareName: fileShareName
         mountPath: '\\mounts\\files'
@@ -122,26 +118,26 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     resource settings 'config' = {
       name: 'appsettings'
       properties: {
-        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-        'APPLICATION_SECRET': appSecret
-        'DB_PASS': dbPass
-        'GOOGLE_WEB_CLIENT_SECRET': googleSecret
-        'LOGSTREAMS_USER': 'boat-staging'
-        'LOGSTREAMS_PASS': logstreamsPass
-        'LOGSTREAMS_ENABLED': 'true'
-        'MAPBOX_TOKEN': mapboxToken
-        'MICROSOFT_WEB_CLIENT_SECRET': microsoftSecret
-        'FCM_API_KEY': fcmApiKey
-        'JAVA_OPTS': '-Xmx256m'
-        'AWS_ACCESS_KEY_ID': awsAccessKeyId
-        'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
+        WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+        APPLICATION_SECRET: appSecret
+        DB_PASS: dbPass
+        GOOGLE_WEB_CLIENT_SECRET: googleSecret
+        LOGSTREAMS_USER: 'boat-staging'
+        LOGSTREAMS_PASS: logstreamsPass
+        LOGSTREAMS_ENABLED: 'true'
+        MAPBOX_TOKEN: mapboxToken
+        MICROSOFT_WEB_CLIENT_SECRET: microsoftSecret
+        FCM_API_KEY: fcmApiKey
+        JAVA_OPTS: '-Xmx256m'
+        AWS_ACCESS_KEY_ID: awsAccessKeyId
+        AWS_SECRET_ACCESS_KEY: awsSecretAccessKey
       }
     }
 
     resource config 'config' = {
       name: 'azurestorageaccounts'
       properties: {
-        'files': {
+        files: {
           type: 'AzureFiles'
           shareName: fileShareName
           mountPath: '\\mounts\\files'

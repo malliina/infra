@@ -139,7 +139,6 @@ module logs 'logs.bicep' = {
     dbPass: keyVault.getSecret('LOGS-DB-PASS')
     googleSecret: keyVault.getSecret('LOGS-GOOGLE-CLIENT-SECRET')
     logstreamsPass: keyVault.getSecret('LOGS-LOGSTREAMS-PASS')
-    fileShareName: fileShareName
   }
 }
 

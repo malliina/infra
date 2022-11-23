@@ -37,10 +37,6 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
   name: uniqueId
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
-  name: 'vault-${uniqueId}'
-}
-
 resource site 'Microsoft.Web/sites@2020-06-01' = {
   name: 'pics-win-${uniqueId}'
   location: location
@@ -63,20 +59,20 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
   resource settings 'config' = {
     name: 'appsettings'
     properties: {
-      'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-      'APPLICATION_SECRET': appSecret
-      'MICROSOFT_CLIENT_SECRET': microsoftSecret
-      'GOOGLE_CLIENT_SECRET': googleSecret
-      'GITHUB_CLIENT_SECRET': githubSecret
-      'FACEBOOK_CLIENT_SECRET': facebookSecret
-      'TWITTER_CLIENT_SECRET': twitterSecret
-      'DB_PASS': dbPass
-      'AWS_ACCESS_KEY_ID': awsAccessKeyId
-      'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
-      'LOGSTREAMS_USER': 'pics'
-      'LOGSTREAMS_PASS': logstreamsPass
-      'LOGSTREAMS_ENABLED': 'true'
-      'JAVA_OPTS': '-Xmx512m'
+      WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+      APPLICATION_SECRET: appSecret
+      MICROSOFT_CLIENT_SECRET: microsoftSecret
+      GOOGLE_CLIENT_SECRET: googleSecret
+      GITHUB_CLIENT_SECRET: githubSecret
+      FACEBOOK_CLIENT_SECRET: facebookSecret
+      TWITTER_CLIENT_SECRET: twitterSecret
+      DB_PASS: dbPass
+      AWS_ACCESS_KEY_ID: awsAccessKeyId
+      AWS_SECRET_ACCESS_KEY: awsSecretAccessKey
+      LOGSTREAMS_USER: 'pics'
+      LOGSTREAMS_PASS: logstreamsPass
+      LOGSTREAMS_ENABLED: 'true'
+      JAVA_OPTS: '-Xmx512m'
     }
   }
 
@@ -92,7 +88,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
   resource config 'config' = {
     name: 'azurestorageaccounts'
     properties: {
-      'files': {
+      files: {
         type: 'AzureFiles'
         shareName: fileShareName
         mountPath: '\\mounts\\files'
@@ -122,27 +118,27 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     resource settings 'config' = {
       name: 'appsettings'
       properties: {
-        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-        'APPLICATION_SECRET': appSecret
-        'MICROSOFT_CLIENT_SECRET': microsoftSecret
-        'GOOGLE_CLIENT_SECRET': googleSecret
-        'GITHUB_CLIENT_SECRET': githubSecret
-        'FACEBOOK_CLIENT_SECRET': facebookSecret
-        'TWITTER_CLIENT_SECRET': twitterSecret
-        'DB_PASS': dbPass
-        'AWS_ACCESS_KEY_ID': awsAccessKeyId
-        'AWS_SECRET_ACCESS_KEY': awsSecretAccessKey
-        'LOGSTREAMS_USER': 'pics-staging'
-        'LOGSTREAMS_PASS': logstreamsPass
-        'LOGSTREAMS_ENABLED': 'true'
-        'JAVA_OPTS': '-Xmx256m'
+        WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+        APPLICATION_SECRET: appSecret
+        MICROSOFT_CLIENT_SECRET: microsoftSecret
+        GOOGLE_CLIENT_SECRET: googleSecret
+        GITHUB_CLIENT_SECRET: githubSecret
+        FACEBOOK_CLIENT_SECRET: facebookSecret
+        TWITTER_CLIENT_SECRET: twitterSecret
+        DB_PASS: dbPass
+        AWS_ACCESS_KEY_ID: awsAccessKeyId
+        AWS_SECRET_ACCESS_KEY: awsSecretAccessKey
+        LOGSTREAMS_USER: 'pics-staging'
+        LOGSTREAMS_PASS: logstreamsPass
+        LOGSTREAMS_ENABLED: 'true'
+        JAVA_OPTS: '-Xmx256m'
       }
     }
 
     resource config 'config' = {
       name: 'azurestorageaccounts'
       properties: {
-        'files': {
+        files: {
           type: 'AzureFiles'
           shareName: fileShareName
           mountPath: '\\mounts\\files'

@@ -28,10 +28,6 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
   name: uniqueId
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
-  name: 'vault-${uniqueId}'
-}
-
 resource site 'Microsoft.Web/sites@2021-03-01' = {
   name: 'api-win-${uniqueId}'
   location: location
@@ -54,13 +50,13 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
   resource settings 'config' = {
     name: 'appsettings'
     properties: {
-      'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-      'APPLICATION_SECRET': appSecret
-      'DB_PASS': dbPass
-      'LOGSTREAMS_USER': 'api'
-      'LOGSTREAMS_PASS': logstreamsPass
-      'LOGSTREAMS_ENABLED': 'true'
-      'JAVA_OPTS': '-Xmx512m'
+      WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+      APPLICATION_SECRET: appSecret
+      DB_PASS: dbPass
+      LOGSTREAMS_USER: 'api'
+      LOGSTREAMS_PASS: logstreamsPass
+      LOGSTREAMS_ENABLED: 'true'
+      JAVA_OPTS: '-Xmx512m'
     }
   }
 
@@ -78,7 +74,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
   resource config 'config' = {
     name: 'azurestorageaccounts'
     properties: {
-      'files': {
+      files: {
         type: 'AzureFiles'
         shareName: fileShareName
         mountPath: '/files'
@@ -108,20 +104,20 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     resource settings 'config' = {
       name: 'appsettings'
       properties: {
-        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-        'APPLICATION_SECRET': appSecret
-        'DB_PASS': dbPass
-        'LOGSTREAMS_USER': 'api-staging'
-        'LOGSTREAMS_PASS': logstreamsPass
-        'LOGSTREAMS_ENABLED': 'true'
-        'JAVA_OPTS': '-Xmx256m'
+        WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+        APPLICATION_SECRET: appSecret
+        DB_PASS: dbPass
+        LOGSTREAMS_USER: 'api-staging'
+        LOGSTREAMS_PASS: logstreamsPass
+        LOGSTREAMS_ENABLED: 'true'
+        JAVA_OPTS: '-Xmx256m'
       }
     }
 
     resource config 'config' = {
       name: 'azurestorageaccounts'
       properties: {
-        'files': {
+        files: {
           type: 'AzureFiles'
           shareName: fileShareName
           mountPath: '/files'

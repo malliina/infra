@@ -15,18 +15,8 @@ param googleSecret string
 @secure()
 param logstreamsPass string
 
-param fileShareName string
-
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
   name: 'plan-win-${uniqueId}'
-}
-
-resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
-  name: uniqueId
-}
-
-resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
-  name: 'vault-${uniqueId}'
 }
 
 resource site 'Microsoft.Web/sites@2021-03-01' = {
@@ -51,14 +41,14 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
   resource settings 'config' = {
     name: 'appsettings'
     properties: {
-      'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-      'APPLICATION_SECRET': appSecret
-      'DB_PASS': dbPass
-      'GOOGLE_CLIENT_SECRET': googleSecret
-      'LOGSTREAMS_USER': 'logstreams'
-      'LOGSTREAMS_PASS': logstreamsPass
-      'LOGSTREAMS_ENABLED': 'true'
-      'JAVA_OPTS': '-Xmx512m'
+      WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+      APPLICATION_SECRET: appSecret
+      DB_PASS: dbPass
+      GOOGLE_CLIENT_SECRET: googleSecret
+      LOGSTREAMS_USER: 'logstreams'
+      LOGSTREAMS_PASS: logstreamsPass
+      LOGSTREAMS_ENABLED: 'true'
+      JAVA_OPTS: '-Xmx512m'
     }
   }
 
@@ -106,14 +96,14 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     resource settings 'config' = {
       name: 'appsettings'
       properties: {
-        'WEBSITES_ENABLE_APP_SERVICE_STORAGE': 'false'
-        'APPLICATION_SECRET': appSecret
-        'DB_PASS': dbPass
-        'GOOGLE_CLIENT_SECRET': googleSecret
-        'LOGSTREAMS_USER': 'logstreams-staging'
-        'LOGSTREAMS_PASS': logstreamsPass
-        'LOGSTREAMS_ENABLED': 'true'
-        'JAVA_OPTS': '-Xmx256m'
+        WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
+        APPLICATION_SECRET: appSecret
+        DB_PASS: dbPass
+        GOOGLE_CLIENT_SECRET: googleSecret
+        LOGSTREAMS_USER: 'logstreams-staging'
+        LOGSTREAMS_PASS: logstreamsPass
+        LOGSTREAMS_ENABLED: 'true'
+        JAVA_OPTS: '-Xmx256m'
       }
     }
 
