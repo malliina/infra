@@ -163,7 +163,7 @@ module boat 'boat.bicep' = {
     dbPass: keyVault.getSecret('BOAT-DB-PASS')
     googleSecret: keyVault.getSecret('BOAT-GOOGLE-CLIENT-SECRET')
     logstreamsPass: keyVault.getSecret('BOAT-LOGSTREAMS-PASS')
-    mapboxToken: keyVault.getSecret('BOAT-MAPBOX-TOKEN')
+    mapboxToken: keyVault.getSecret('BOAT-MAPBOX-TOKEN', '187ed8174c9c4909a0b78e4c34d4c26c')
     microsoftSecret: keyVault.getSecret('BOAT-MICROSOFT-CLIENT-SECRET')
     fcmApiKey: keyVault.getSecret('BOAT-FCM-API-KEY')
     awsAccessKeyId: keyVault.getSecret('BOAT-AWS-ACCESS-KEY-ID')
