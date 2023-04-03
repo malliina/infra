@@ -6,6 +6,7 @@ param uniqueId string = uniqueString(resourceGroup().id)
 param originHostname string = 'pics.malliina.com'
 param cdnHostname string = 'pics-cdn.malliina.com'
 
+param vnetSubnetId string
 @secure()
 param appSecret string
 @secure()
@@ -37,7 +38,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
   name: uniqueId
 }
 
-resource site 'Microsoft.Web/sites@2020-06-01' = {
+resource site 'Microsoft.Web/sites@2021-03-01' = {
   name: 'pics-win-${uniqueId}'
   location: location
   properties: {
@@ -51,6 +52,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
     }
     httpsOnly: true
     serverFarmId: appServicePlan.id
+    virtualNetworkSubnetId: vnetSubnetId
   }
   identity: {
     type: 'SystemAssigned'
@@ -113,6 +115,7 @@ resource site 'Microsoft.Web/sites@2020-06-01' = {
       }
       httpsOnly: true
       serverFarmId: appServicePlan.id
+      virtualNetworkSubnetId: vnetSubnetId
     }
 
     resource settings 'config' = {

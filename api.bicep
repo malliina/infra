@@ -11,6 +11,7 @@ var originHostnames = [
 param cdnHostname string = 'api-cdn.malliina.com'
 param mvnCdnHostname string = 'mvn-cdn.malliina.com'
 
+param vnetSubnetId string
 @secure()
 param appSecret string
 @secure()
@@ -42,6 +43,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     }
     httpsOnly: true
     serverFarmId: appServicePlan.id
+    virtualNetworkSubnetId: vnetSubnetId
   }
   identity: {
     type: 'SystemAssigned'
@@ -99,6 +101,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       }
       httpsOnly: true
       serverFarmId: appServicePlan.id
+      virtualNetworkSubnetId: vnetSubnetId
     }
 
     resource settings 'config' = {

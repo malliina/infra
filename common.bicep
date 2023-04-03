@@ -130,6 +130,7 @@ module pics 'pics.bicep' = {
     prefix: 'pics'
     location: location
     managedIdentityId: managedIdentity.id
+    vnetSubnetId: networking.outputs.appSubnetId
     appSecret: keyVault.getSecret('PICS-APPLICATION-SECRET')
     dbPass: keyVault.getSecret('PICS-DB-PASS')
     twitterSecret: keyVault.getSecret('PICS-TWITTER-CLIENT-SECRET')
@@ -150,6 +151,7 @@ module api 'api.bicep' = {
     prefix: 'api'
     location: location
     managedIdentityId: managedIdentity.id
+    vnetSubnetId: networking.outputs.appSubnetId
     appSecret: keyVault.getSecret('API-APPLICATION-SECRET')
     dbPass: keyVault.getSecret('API-DB-PASS')
     fileShareName: fileShareName
@@ -163,6 +165,7 @@ module logs 'logs.bicep' = {
     prefix: 'logs'
     location: location
     managedIdentityId: managedIdentity.id
+    vnetSubnetId: networking.outputs.appSubnetId
     appSecret: keyVault.getSecret('LOGS-APPLICATION-SECRET')
     dbPass: keyVault.getSecret('LOGS-DB-PASS')
     googleSecret: keyVault.getSecret('LOGS-GOOGLE-CLIENT-SECRET')
@@ -176,6 +179,7 @@ module boat 'boat.bicep' = {
     location: location
     prefix: 'boat'
     managedIdentityId: managedIdentity.id
+    vnetSubnetId: networking.outputs.appSubnetId
     appSecret: keyVault.getSecret('BOAT-APPLICATION-SECRET')
     dbPass: keyVault.getSecret('BOAT-DB-PASS')
     googleSecret: keyVault.getSecret('BOAT-GOOGLE-CLIENT-SECRET')
