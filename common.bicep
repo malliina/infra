@@ -91,6 +91,17 @@ module datalake8 'database-vnet.bicep' = {
   }
 }
 
+module vm 'vm.bicep' = {
+  name: 'vm-${uniqueId}'
+  params: {
+    location: location
+    adminPublicKey: keyVault.getSecret('SSH-PUBLIC-KEY')
+    adminUsername: 'mle'
+    subnetId: networking.outputs.vmSubnetId
+  }
+}
+
+
 resource cdnProfile 'Microsoft.Cdn/profiles@2020-09-01' = {
   name: 'cdn-ms-${uniqueId}'
   location: location
