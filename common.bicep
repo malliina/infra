@@ -65,12 +65,29 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   }
 }
 
+module networking 'networking.bicep' = {
+  name: 'networking-${uniqueId}'
+  params: {
+    location: location
+  }
+}
+
 module datalake 'database.bicep' = {
   name: 'datalake-${uniqueId}'
   params: {
     location: location
     adminLogin: 'malliina'
     adminPassword: keyVault.getSecret('ADMIN-DB-PASS')
+  }
+}
+
+module datalake8 'database-vnet.bicep' = {
+  name: 'datalake8-${uniqueId}'
+  params: {
+    location: location
+    adminLogin: 'malliina'
+    adminPassword: keyVault.getSecret('ADMIN-DB-PASS')
+    subnetId: networking.outputs.databaseSubnetId
   }
 }
 
