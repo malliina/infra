@@ -77,7 +77,6 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = {
     }
     storageProfile: {
       osDisk: {
-        diskSizeGB: 8
         createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Premium_LRS'
