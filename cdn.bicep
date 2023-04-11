@@ -97,8 +97,6 @@ resource cdnCustomDomains 'Microsoft.Cdn/profiles/endpoints/customDomains@2020-0
   }
 }]
 
-param utcValue string = utcNow()
-
 // didn't find a way to enable custom https for cdn using arm resources, so a script will have to do
 resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01' = [for i in range(0, hostnameCount): {
   name: (i == 0) ? 'cdn-https-${uniqueId}' : 'cdn-https-${i}-${uniqueId}'

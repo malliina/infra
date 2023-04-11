@@ -6,10 +6,11 @@ param adminUsername string
 param adminPublicKey string
 param subnetId string
 
-var vmName = 'vm-${uniqueId}'
+var prefix = 'vm'
+var vmName = '${prefix}-${uniqueId}'
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-09-01' = {
-  name: 'vm-nsg-${uniqueId}'
+  name: '${prefix}-nsg-${uniqueId}'
   location: location
   properties: {
     securityRules: [
@@ -31,7 +32,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-09-0
 }
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-09-01' = {
-  name: 'vm-ip-${uniqueId}'
+  name: '${prefix}-ip-${uniqueId}'
   location: location
   sku: {
     name: 'Basic'
@@ -44,7 +45,7 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-09-01' = {
 }
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-09-01' = {
-  name: 'vm-nic-${uniqueId}'
+  name: '${prefix}-nic-${uniqueId}'
   location: location
   properties: {
     ipConfigurations: [
@@ -76,6 +77,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = {
     }
     storageProfile: {
       osDisk: {
+        diskSizeGB: 8
         createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Premium_LRS'
