@@ -95,7 +95,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         shareName: fileShareName
         mountPath: '\\mounts\\files'
         accountName: storage.name      
-        accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+        accessKey: storage.listKeys().keys[0].value
       }
     }
   }
@@ -146,7 +146,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
           shareName: fileShareName
           mountPath: '\\mounts\\files'
           accountName: storage.name      
-          accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+          accessKey: storage.listKeys().keys[0].value
         }
       }
     }

@@ -41,6 +41,9 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-09-01' = {
     publicIPAllocationMethod: 'Static'
     publicIPAddressVersion: 'IPv4'
     idleTimeoutInMinutes: 4
+    dnsSettings: {
+      domainNameLabel: '${prefix}-${uniqueId}'
+    }
   }
 }
 
