@@ -46,7 +46,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       healthCheckPath: '/health'
       javaContainer: 'JAVA'
       javaContainerVersion: 'SE'
-      javaVersion: '11'
+      javaVersion: '17'
       alwaysOn: true
       webSocketsEnabled: true
     }
@@ -109,7 +109,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         autoSwapSlotName: 'production'
         javaContainer: 'JAVA'
         javaContainerVersion: 'SE'
-        javaVersion: '11'
+        javaVersion: '17'
         alwaysOn: true
         webSocketsEnabled: true
       }

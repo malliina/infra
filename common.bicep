@@ -72,15 +72,6 @@ module networking 'networking.bicep' = {
   }
 }
 
-module datalake 'database.bicep' = {
-  name: 'datalake-${uniqueId}'
-  params: {
-    location: location
-    adminLogin: 'malliina'
-    adminPassword: keyVault.getSecret('ADMIN-DB-PASS')
-  }
-}
-
 module datalake8 'database-vnet.bicep' = {
   name: 'datalake8-${uniqueId}'
   params: {
