@@ -6,7 +6,7 @@ param adminLogin string
 param adminPassword string
 param subnetId string
 
-resource server 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
+resource server 'Microsoft.DBforMySQL/flexibleServers@2022-09-30-preview' = {
   name: 'database8-${uniqueId}'
   location: location
   sku: {
@@ -20,7 +20,7 @@ resource server 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
     storage: {
       autoGrow: 'Enabled'
       storageSizeGB: 64
-      iops: 720
+      autoIoScaling: 'Enabled'
     }
     backup: {
       geoRedundantBackup: 'Disabled'

@@ -59,6 +59,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       LOGSTREAMS_PASS: logstreamsPass
       LOGSTREAMS_ENABLED: 'true'
       JAVA_OPTS: '-Xmx512m'
+      ENV_NAME: 'prod'
     }
   }
 
@@ -81,7 +82,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         shareName: fileShareName
         mountPath: '/files'
         accountName: storage.name      
-        accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+        accessKey: storage.listKeys().keys[0].value
       }
     }
   }
@@ -114,6 +115,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         LOGSTREAMS_PASS: logstreamsPass
         LOGSTREAMS_ENABLED: 'true'
         JAVA_OPTS: '-Xmx256m'
+        ENV_NAME: 'staging'
       }
     }
 
@@ -125,7 +127,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
           shareName: fileShareName
           mountPath: '/files'
           accountName: storage.name      
-          accessKey: listKeys(storage.id, storage.apiVersion).keys[0].value
+          accessKey: storage.listKeys().keys[0].value
         }
       }
     }

@@ -73,6 +73,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
       JAVA_OPTS: '-Xmx512m'
       AWS_ACCESS_KEY_ID: awsAccessKeyId
       AWS_SECRET_ACCESS_KEY: awsSecretAccessKey
+      ENV_NAME: 'prod'
     }
   }
 
@@ -134,6 +135,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         JAVA_OPTS: '-Xmx256m'
         AWS_ACCESS_KEY_ID: awsAccessKeyId
         AWS_SECRET_ACCESS_KEY: awsSecretAccessKey
+        ENV_NAME: 'staging'
       }
     }
 
