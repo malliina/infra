@@ -88,6 +88,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
         APPLICATION_SECRET: appSecret
         DB_PASS: dbPass
+        DB_POOL_SIZE: '2'
         GOOGLE_CLIENT_SECRET: googleSecret
         LOGSTREAMS_USER: 'logstreams-staging'
         LOGSTREAMS_PASS: logstreamsPass

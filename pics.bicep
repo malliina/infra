@@ -130,6 +130,7 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
         FACEBOOK_CLIENT_SECRET: facebookSecret
         TWITTER_CLIENT_SECRET: twitterSecret
         DB_PASS: dbPass
+        DB_POOL_SIZE: '2'
         AWS_ACCESS_KEY_ID: awsAccessKeyId
         AWS_SECRET_ACCESS_KEY: awsSecretAccessKey
         LOGSTREAMS_USER: 'pics-staging'
