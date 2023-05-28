@@ -84,6 +84,11 @@ resource site 'Microsoft.Web/sites@2021-03-01' = {
     properties: {
       appSettingNames: [
         'LOGSTREAMS_USER'
+        'LOGSTREAMS_PASS'
+        'DB_USER'
+        'DB_POOL_SIZE'
+        'ENV_NAME'
+        'JAVA_OPTS'
       ]
     }
   }
