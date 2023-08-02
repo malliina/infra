@@ -21,15 +21,15 @@ param logstreamsPass string
 
 param fileShareName string
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' existing = {
   name: 'plan-win-${uniqueId}'
 }
 
-resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
+resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
   name: uniqueId
 }
 
-resource site 'Microsoft.Web/sites@2021-03-01' = {
+resource site 'Microsoft.Web/sites@2022-09-01' = {
   name: 'api-win-${uniqueId}'
   location: location
   properties: {
@@ -163,7 +163,7 @@ module mvnDomain 'appdomain.bicep' = {
   }
 }
 
-resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
+resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: 'workspace-${uniqueId}'
 }
 

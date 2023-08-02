@@ -6,7 +6,7 @@ var vmSubnetName = 'vm-subnet-${uniqueId}'
 var appSubnetName = 'app-subnet-${uniqueId}'
 
 // https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/scenarios-virtual-networks
-resource vnet 'Microsoft.Network/virtualNetworks@2022-09-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2023-02-01' = {
   name: 'demo-vnet-${uniqueId}'
   location: location
   properties: {

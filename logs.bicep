@@ -16,11 +16,11 @@ param googleSecret string
 @secure()
 param logstreamsPass string
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' existing = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' existing = {
   name: 'plan-win-${uniqueId}'
 }
 
-resource site 'Microsoft.Web/sites@2021-03-01' = {
+resource site 'Microsoft.Web/sites@2022-09-01' = {
   name: 'logs-win-${uniqueId}'
   location: location
   properties: {
@@ -137,7 +137,7 @@ module appDomain 'appdomain.bicep' = {
   }
 }
 
-resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
+resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: 'workspace-${uniqueId}'
 }
 

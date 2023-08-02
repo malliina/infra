@@ -6,11 +6,11 @@ param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
 
-resource cdnProfile 'Microsoft.Cdn/profiles@2020-09-01' existing = {
+resource cdnProfile 'Microsoft.Cdn/profiles@2023-05-01' existing = {
   name: 'cdn-ms-${uniqueId}'
 }
 
-resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
+resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2023-05-01' = {
   parent: cdnProfile
   name: endpointName
   location: location
@@ -89,7 +89,7 @@ resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
 
 var hostnameCount = length(hostnames)
 
-resource cdnCustomDomains 'Microsoft.Cdn/profiles/endpoints/customDomains@2020-09-01' = [for i in range(0, hostnameCount): {
+resource cdnCustomDomains 'Microsoft.Cdn/profiles/endpoints/customDomains@2023-05-01' = [for i in range(0, hostnameCount): {
   parent: cdnEndpoint
   name: (i == 0) ? 'custom-domain-${uniqueId}' : 'custom-domain-${i}-${uniqueId}'
   properties: {

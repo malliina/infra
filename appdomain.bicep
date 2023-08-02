@@ -6,7 +6,7 @@ param appServicePlanId string
 
 param location string = resourceGroup().location
 
-resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
+resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2022-09-01' = {
   name: '${sitename}/${origin}'
   properties: {
     hostNameType: 'Verified'
@@ -16,7 +16,7 @@ resource javaCustomDomain 'Microsoft.Web/sites/hostNameBindings@2021-02-01' = {
   }
 }
 
-resource certificate 'Microsoft.Web/certificates@2021-02-01' = {
+resource certificate 'Microsoft.Web/certificates@2022-09-01' = {
   name: origin
   location: location
   dependsOn: [

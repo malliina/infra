@@ -3,7 +3,7 @@ param uniqueId string = uniqueString(resourceGroup().id)
 
 var fileShareName = 'fs-${uniqueId}'
 
-resource appServicePlanWin 'Microsoft.Web/serverfarms@2022-03-01' = {
+resource appServicePlanWin 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: 'plan-win-${uniqueId}'
   location: location
   kind: 'windows'
@@ -13,12 +13,12 @@ resource appServicePlanWin 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
-resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
+resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: 'workspace-${uniqueId}'
   location: location
 }
 
-resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: uniqueId
   location: location
   sku: {
@@ -38,7 +38,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   }
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
+resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'vault-${uniqueId}'
   location: location
   properties: {
@@ -111,7 +111,7 @@ resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022
 // }
 
 // https://github.com/Azure/azure-quickstart-templates/blob/e6e50ae57a2613858b37af1c3e95dfe93733bd4c/quickstarts/microsoft.storage/storage-static-website/main.bicep#L47
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: 'DeploymentScript'
   location: location
 }
@@ -196,7 +196,8 @@ module boat 'boat.bicep' = {
 }
 
 resource keyVaultPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' = {
-  name: '${keyVault.name}/add'
+  parent: keyVault
+  name: 'add'
   properties: {
     accessPolicies: [
       {
