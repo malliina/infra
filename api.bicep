@@ -18,6 +18,8 @@ param appSecret string
 param dbPass string
 @secure()
 param logstreamsPass string
+@secure()
+param discoGsToken string
 
 param fileShareName string
 
@@ -58,6 +60,7 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
       LOGSTREAMS_USER: 'api'
       LOGSTREAMS_PASS: logstreamsPass
       LOGSTREAMS_ENABLED: 'true'
+      DISCOGS_TOKEN: discoGsToken
       JAVA_OPTS: '-Xmx512m'
       ENV_NAME: 'prod'
     }
@@ -120,6 +123,7 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
         LOGSTREAMS_USER: 'api-staging'
         LOGSTREAMS_PASS: logstreamsPass
         LOGSTREAMS_ENABLED: 'true'
+        DISCOGS_TOKEN: discoGsToken
         JAVA_OPTS: '-Xmx256m'
         ENV_NAME: 'staging'
       }

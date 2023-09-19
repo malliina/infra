@@ -158,6 +158,7 @@ module api 'api.bicep' = {
     dbPass: keyVault.getSecret('API-DB-PASS')
     fileShareName: fileShareName
     logstreamsPass: keyVault.getSecret('API-LOGSTREAMS-PASS')
+    discoGsToken: keyVault.getSecret('API-DISCOGS-TOKEN')
   }
 }
 
