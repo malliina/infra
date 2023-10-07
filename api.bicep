@@ -7,6 +7,7 @@ param uniqueId string = uniqueString(resourceGroup().id)
 var originHostnames = [
   'api.malliina.com'
   'mvn.malliina.com'
+  'api.musicpimp.org'
 ]
 param cdnHostname string = 'api-cdn.malliina.com'
 param mvnCdnHostname string = 'mvn-cdn.malliina.com'
@@ -162,6 +163,19 @@ module mvnDomain 'appdomain.bicep' = {
   params: {
     appServicePlanId: appServicePlan.id
     origin: originHostnames[1]
+    sitename: site.name
+    location: location
+  }
+}
+
+module musicDomain 'appdomain.bicep' = {
+  name: '${prefix}-music-domain'
+  dependsOn: [
+    mvnDomain
+  ]
+  params: {
+    appServicePlanId: appServicePlan.id
+    origin: originHostnames[2]
     sitename: site.name
     location: location
   }
