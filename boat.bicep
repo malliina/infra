@@ -183,6 +183,32 @@ module apiDomain 'appdomain.bicep' = {
   }
 }
 
+module carWwwDomain 'appdomain.bicep' = {
+  name: '${prefix}-car-www-domain'
+  dependsOn: [
+    apiDomain
+  ]
+  params: {
+    appServicePlanId: appServicePlan.id
+    origin: 'www.car-map.com'
+    sitename: site.name
+    location: location
+  }
+}
+
+module carApiDomain 'appdomain.bicep' = {
+  name: '${prefix}-car-api-domain'
+  dependsOn: [
+    carWwwDomain
+  ]
+  params: {
+    appServicePlanId: appServicePlan.id
+    origin: 'api.car-map.com'
+    sitename: site.name
+    location: location
+  }
+}
+
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: 'workspace-${uniqueId}'
 }
