@@ -19,7 +19,9 @@ param logstreamsPass string
 @secure()
 param mapboxToken string
 @secure()
-param microsoftSecret string
+param microsoftBoatSecret string
+@secure()
+param microsoftCarSecret string
 @secure()
 param fcmApiKey string
 @secure()
@@ -68,7 +70,8 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
       LOGSTREAMS_PASS: logstreamsPass
       LOGSTREAMS_ENABLED: 'true'
       MAPBOX_TOKEN: mapboxToken
-      MICROSOFT_WEB_CLIENT_SECRET: microsoftSecret
+      MICROSOFT_WEB_CLIENT_SECRET: microsoftBoatSecret
+      MICROSOFT_CAR_WEB_CLIENT_SECRET: microsoftCarSecret
       FCM_API_KEY: fcmApiKey
       JAVA_OPTS: '-Xmx512m'
       AWS_ACCESS_KEY_ID: awsAccessKeyId
@@ -136,7 +139,8 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
         LOGSTREAMS_PASS: logstreamsPass
         LOGSTREAMS_ENABLED: 'true'
         MAPBOX_TOKEN: mapboxToken
-        MICROSOFT_WEB_CLIENT_SECRET: microsoftSecret
+        MICROSOFT_WEB_CLIENT_SECRET: microsoftBoatSecret
+        MICROSOFT_CAR_WEB_CLIENT_SECRET: microsoftCarSecret
         FCM_API_KEY: fcmApiKey
         JAVA_OPTS: '-Xmx256m'
         AWS_ACCESS_KEY_ID: awsAccessKeyId
