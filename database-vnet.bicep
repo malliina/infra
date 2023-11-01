@@ -6,7 +6,7 @@ param adminLogin string
 param adminPassword string
 param subnetId string
 
-resource server 'Microsoft.DBforMySQL/flexibleServers@2022-09-30-preview' = {
+resource server 'Microsoft.DBforMySQL/flexibleServers@2023-06-01-preview' = {
   name: 'database8-${uniqueId}'
   location: location
   sku: {

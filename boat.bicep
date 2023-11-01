@@ -33,7 +33,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' existing = {
   name: 'plan-win-${uniqueId}'
 }
 
-resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
+resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
   name: uniqueId
 }
 

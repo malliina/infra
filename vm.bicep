@@ -9,7 +9,7 @@ param subnetId string
 var prefix = 'vm'
 var vmName = '${prefix}-${uniqueId}'
 
-resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-02-01' = {
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-05-01' = {
   name: '${prefix}-nsg-${uniqueId}'
   location: location
   properties: {
@@ -31,7 +31,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-02-0
   }
 }
 
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2023-02-01' = {
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
   name: '${prefix}-ip-${uniqueId}'
   location: location
   sku: {
@@ -47,7 +47,7 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2023-02-01' = {
   }
 }
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2023-02-01' = {
+resource networkInterface 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   name: '${prefix}-nic-${uniqueId}'
   location: location
   properties: {
@@ -71,7 +71,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2023-02-01' = {
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
+resource vm 'Microsoft.Compute/virtualMachines@2023-07-01' = {
   name: vmName
   location: location
   properties: {
