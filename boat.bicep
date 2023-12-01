@@ -168,7 +168,7 @@ module wwwDomain 'appdomain.bicep' = {
   name: '${prefix}-www-domain'
   params: {
     appServicePlanId: appServicePlan.id
-    origin: originHostname
+    origin: 'www.boat-tracker.com'
     sitename: site.name
     location: location
   }

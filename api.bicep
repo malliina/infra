@@ -5,9 +5,9 @@ param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
 
 var originHostnames = [
-  'api.malliina.com'
-  'mvn.malliina.com'
-  'api.musicpimp.org'
+  { short: 'api', domain: 'api.malliina.com'}
+  { short: 'mvn', domain: 'mvn.malliina.com' }
+  { short: 'music', domain: 'api.musicpimp.org' }
 ]
 param cdnHostname string = 'api-cdn.malliina.com'
 param mvnCdnHostname string = 'mvn-cdn.malliina.com'
@@ -145,41 +145,16 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
   }
 }
 
-module apiDomain 'appdomain.bicep' = {
-  name: '${prefix}-api-domain'
+@batchSize(1)
+module domains 'appdomain.bicep' = [for conf in originHostnames: {
+  name: '${prefix}-${conf.short}-domain'
   params: {
     appServicePlanId: appServicePlan.id
-    origin: originHostnames[0]
+    origin: conf.domain
     sitename: site.name
     location: location
   }
-}
-
-module mvnDomain 'appdomain.bicep' = {
-  name: '${prefix}-mvn-domain'
-  dependsOn: [
-    apiDomain
-  ]
-  params: {
-    appServicePlanId: appServicePlan.id
-    origin: originHostnames[1]
-    sitename: site.name
-    location: location
-  }
-}
-
-module musicDomain 'appdomain.bicep' = {
-  name: '${prefix}-music-domain'
-  dependsOn: [
-    mvnDomain
-  ]
-  params: {
-    appServicePlanId: appServicePlan.id
-    origin: originHostnames[2]
-    sitename: site.name
-    location: location
-  }
-}
+}]
 
 resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: 'workspace-${uniqueId}'
