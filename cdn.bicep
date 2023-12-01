@@ -87,18 +87,16 @@ resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2023-05-01' = {
   }
 }
 
-var hostnameCount = length(hostnames)
-
-resource cdnCustomDomains 'Microsoft.Cdn/profiles/endpoints/customDomains@2023-05-01' = [for i in range(0, hostnameCount): {
+resource cdnCustomDomains 'Microsoft.Cdn/profiles/endpoints/customDomains@2023-05-01' = [for (hostname, i) in hostnames: {
   parent: cdnEndpoint
   name: (i == 0) ? 'custom-domain-${uniqueId}' : 'custom-domain-${i}-${uniqueId}'
   properties: {
-    hostName: hostnames[i]
+    hostName: hostname
   }
 }]
 
 // didn't find a way to enable custom https for cdn using arm resources, so a script will have to do
-resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01' = [for i in range(0, hostnameCount): {
+resource cdnEnableCustomHttps 'Microsoft.Resources/deploymentScripts@2020-10-01' = [for (hostname, i) in hostnames: {
   name: (i == 0) ? 'cdn-https-${uniqueId}' : 'cdn-https-${i}-${uniqueId}'
   location: location
   kind: 'AzurePowerShell'
