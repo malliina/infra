@@ -4,7 +4,14 @@ param prefix string
 param managedIdentityId string
 param location string = resourceGroup().location
 param uniqueId string = uniqueString(resourceGroup().id)
-param originHostname string = 'www.boat-tracker.com'
+
+var originHostnames = [
+  { short: 'www', domain: 'www.boat-tracker.com'}
+  { short: 'api', domain: 'api.boat-tracker.com' }
+  { short: 'car-www', domain: 'www.car-map.com' }
+  { short: 'car-api', domain: 'api.car-map.com' }
+]
+
 param cdnHostname string = 'cdn.boat-tracker.com'
 
 param vnetSubnetId string
@@ -164,89 +171,22 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
   }
 }
 
-module wwwDomain 'appdomain.bicep' = {
-  name: '${prefix}-www-domain'
+@batchSize(1)
+module domains 'appdomain.bicep' = [for conf in originHostnames: {
+  name: '${prefix}-${conf.short}-domain'
   params: {
     appServicePlanId: appServicePlan.id
-    origin: 'www.boat-tracker.com'
+    origin: conf.domain
     sitename: site.name
     location: location
   }
-}
+}]
 
-module apiDomain 'appdomain.bicep' = {
-  name: '${prefix}-api-domain'
-  dependsOn: [
-    wwwDomain
-  ]
+module diagnostics 'diagnostics.bicep' = {
+  name: '${prefix}-diagnostics-${uniqueId}-module'
   params: {
-    appServicePlanId: appServicePlan.id
-    origin: 'api.boat-tracker.com'
-    sitename: site.name
-    location: location
-  }
-}
-
-module carWwwDomain 'appdomain.bicep' = {
-  name: '${prefix}-car-www-domain'
-  dependsOn: [
-    apiDomain
-  ]
-  params: {
-    appServicePlanId: appServicePlan.id
-    origin: 'www.car-map.com'
-    sitename: site.name
-    location: location
-  }
-}
-
-module carApiDomain 'appdomain.bicep' = {
-  name: '${prefix}-car-api-domain'
-  dependsOn: [
-    carWwwDomain
-  ]
-  params: {
-    appServicePlanId: appServicePlan.id
-    origin: 'api.car-map.com'
-    sitename: site.name
-    location: location
-  }
-}
-
-resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
-  name: 'workspace-${uniqueId}'
-}
-
-resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: '${prefix}-diagnostics-${uniqueId}'
-  scope: site
-  properties: {
-    workspaceId: analyticsWorkspace.id
-    logs: [
-      {
-        category: 'AppServiceAppLogs'
-        enabled: true
-      }
-      {
-        category: 'AppServiceConsoleLogs'
-        enabled: true
-      }
-     
-      {
-        category: 'AppServiceHTTPLogs'
-        enabled: true
-      }
-      {
-        category: 'AppServicePlatformLogs'
-        enabled: true
-      }
-    ]
-    metrics: [
-      {
-        category: 'AllMetrics'
-        enabled: true
-      }
-    ]
+    short: prefix
+    siteName: site.name
   }
 }
 
