@@ -9,8 +9,10 @@ var originHostnames = [
   { short: 'mvn', domain: 'mvn.malliina.com' }
   { short: 'music', domain: 'api.musicpimp.org' }
 ]
-param cdnHostname string = 'api-cdn.malliina.com'
-param mvnCdnHostname string = 'mvn-cdn.malliina.com'
+var cdnHostnames = [
+  'api-cdn.malliina.com'
+  'mvn-cdn.malliina.com'
+]
 
 param vnetSubnetId string
 @secure()
@@ -168,10 +170,7 @@ module cdn 'cdn.bicep' = {
   name: '${prefix}-cdn-${uniqueId}'
   params: {
     endpointName: 'api-endpoint-${uniqueId}'
-    hostnames: [
-      cdnHostname
-      mvnCdnHostname
-    ]
+    hostnames: cdnHostnames
     origin: site.properties.defaultHostName
     location: location
     managedIdentityId: managedIdentityId

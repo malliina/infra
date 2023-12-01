@@ -171,40 +171,11 @@ module appDomain 'appdomain.bicep' = {
   }
 }
 
-resource analyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
-  name: 'workspace-${uniqueId}'
-}
-
-resource diagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: 'pics-diagnostics-${uniqueId}'
-  scope: site
-  properties: {
-    workspaceId: analyticsWorkspace.id
-    logs: [
-      {
-        category: 'AppServiceAppLogs'
-        enabled: true
-      }
-      {
-        category: 'AppServiceConsoleLogs'
-        enabled: true
-      }
-     
-      {
-        category: 'AppServiceHTTPLogs'
-        enabled: true
-      }
-      {
-        category: 'AppServicePlatformLogs'
-        enabled: true
-      }
-    ]
-    metrics: [
-      {
-        category: 'AllMetrics'
-        enabled: true
-      }
-    ]
+module diagnostics 'diagnostics.bicep' = {
+  name: '${prefix}-diagnostics-${uniqueId}-module'
+  params: {
+    short: prefix
+    siteName: site.name
   }
 }
 
