@@ -34,10 +34,10 @@ class Infra(construct: Stack) extends Stack(construct, "boat"):
     "SecretAccessKey" -> accessKey.getSecretAccessKey.toString
   )
 
-  def outputs(scope: Construct)(kvs: (String, String)*) = kvs.map { case (k, v) =>
-    CfnOutput.Builder
-      .create(scope, k)
-      .exportName(k)
-      .value(v)
-      .build()
-  }
+  def outputs(scope: Construct)(kvs: (String, String)*) = kvs.map:
+    case (k, v) =>
+      CfnOutput.Builder
+        .create(scope, k)
+        .exportName(k)
+        .value(v)
+        .build()
