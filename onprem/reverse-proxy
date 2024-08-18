@@ -27,12 +27,6 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/api.boat-tracker.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/api.boat-tracker.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
 server {
@@ -53,12 +47,6 @@ server {
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
     }
-
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/api.boat-tracker.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/api.boat-tracker.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
 server {
@@ -79,12 +67,6 @@ server {
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
     }
-
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/api.boat-tracker.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/api.boat-tracker.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
 server {
@@ -105,62 +87,5 @@ server {
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
     }
-
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/api.boat-tracker.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/api.boat-tracker.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
-server {
-    if ($host = www.car-map.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    if ($host = api.car-map.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    if ($host = www.boat-tracker.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    if ($host = api.boat-tracker.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    server_name www.car-map.com api.car-map.com www.boat-tracker.com api.boat-tracker.com;
-    listen 80;
-    return 404; # managed by Certbot
-}
-
-server {
-    if ($host = api.malliina.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    server_name api.malliina.com;
-    listen 80;
-    return 404; # managed by Certbot
-}
-
-server {
-    if ($host = logs.malliina.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    server_name logs.malliina.com;
-    listen 80;
-    return 404; # managed by Certbot
-}
-
-server {
-    if ($host = pics.malliina.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    server_name pics.malliina.com;
-    listen 80;
-    return 404; # managed by Certbot
-}
