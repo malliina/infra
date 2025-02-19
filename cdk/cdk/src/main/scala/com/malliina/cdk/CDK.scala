@@ -1,5 +1,6 @@
 package com.malliina.cdk
 
+import com.malliina.cdk.StaticWebsite.StaticConf
 import software.amazon.awscdk.services.iam.{AccessKey, AccessKeyStatus, User}
 import software.amazon.awscdk.services.s3.Bucket
 import software.amazon.awscdk.{CfnOutput, Environment, Stack, StackProps, App as AWSApp}
@@ -16,6 +17,8 @@ object CDK:
     val app = AWSApp()
     val stack = Stack(app, "boat", CDK.stackProps)
     val boat = Infra(stack)
+    val static =
+      StaticWebsite(StaticConf("cdk.malliina.com", "/global/certificates/arn"), app, "s3-static")
     app.synth()
 
 class Infra(construct: Stack) extends Stack(construct, "boat"):

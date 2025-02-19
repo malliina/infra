@@ -2,13 +2,13 @@ inThisBuild(
   Seq(
     version := "0.0.1",
     organization := "com.malliina",
-    scalaVersion := "3.4.2",
+    scalaVersion := "3.6.2",
     Test / publishArtifact := true,
-    libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
+    libraryDependencies += "org.scalameta" %% "munit" % "1.1.0" % Test
   )
 )
 
-val cdkVersion = "2.150.0"
+val cdkVersion = "2.178.2"
 
 val cdk = project
   .in(file("cdk"))
@@ -27,10 +27,10 @@ val lambda = project
   .in(file("lambda"))
   .settings(
     libraryDependencies ++= Seq(
-      "ch.qos.logback" % "logback-classic" % "1.5.6",
-      "com.malliina" %% "primitives" % "3.7.3",
+      "ch.qos.logback" % "logback-classic" % "1.5.16",
+      "com.malliina" %% "primitives" % "3.7.7",
       "com.amazonaws" % "aws-lambda-java-core" % "1.2.3",
-      "com.amazonaws" % "aws-lambda-java-events" % "3.13.0"
+      "com.amazonaws" % "aws-lambda-java-events" % "3.15.0"
     ),
     assembly / assemblyMergeStrategy := {
       case PathList("module-info.class")                              => MergeStrategy.first
